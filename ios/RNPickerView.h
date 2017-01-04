@@ -23,5 +23,7 @@
 @property (nonatomic, weak) id<RNPickerViewDelegate> delegate;
 @property (nonatomic, copy) RCTBubblingEventBlock onPickerConfirm;
 @property (nonatomic, copy) RCTBubblingEventBlock onPickerCancel;
+@property (nonatomic, assign) NSInteger minYear;
+@property (nonatomic, assign) NSInteger maxYear;
 
 @end

@@ -390,7 +390,7 @@
 {
     if (scrollView == yearScrollView) {
         
-        if (self.datePickerMode == DatePickerDateMode || self.datePickerMode == DatePickerDateTimeMode) {
+        if (self.datePickerMode == DatePickerDateMode || self.datePickerMode == DatePickerDateTimeMode || _datePickerMode == DatePickerDateHourMinuteMode) {
             return _maxYear - _minYear + 1;
         }
         

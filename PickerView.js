@@ -10,6 +10,10 @@ export default class Picker extends Component {
      * 当选择 date picker `确定`按钮时调用时调用该 function.
      */
     onPickerConfirm: React.PropTypes.func,
+    /**
+     * 显示 date picker
+     */
+    show: React.PropTypes.func,
   };
   constructor(props) {
     super(props);
@@ -19,7 +23,6 @@ export default class Picker extends Component {
   }
 
   componentWillUnmount() {
-    clearTimeout(this.timeoutID);
   }
 
   show() {
@@ -44,6 +47,8 @@ export default class Picker extends Component {
         {...this.props}
         onPickerConfirm={(event) => this.onPickerConfirm(event)}
         onPickerCancel={(event) => this.onPickerCancel(event)}
+        minYear={2016}
+        maxYear={2018}
       />
     );
   }

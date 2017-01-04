@@ -25,9 +25,6 @@ RCT_EXPORT_MODULE()
 
 #pragma mark - RNPickerViewDelegate
 - (void)pickerViewDidConfirm:(RNPickerView *)pickerView {
-//  if (!pickerView.onPickerConfirm) {
-//    return;
-//  }
   NSDictionary *params = @{@"data": @"12345"};
   pickerView.onPickerConfirm(params);
 }
@@ -39,5 +36,7 @@ RCT_EXPORT_MODULE()
 }
 RCT_EXPORT_VIEW_PROPERTY(onPickerConfirm, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onPickerCancel, RCTBubblingEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(minYear, NSInteger)
+RCT_EXPORT_VIEW_PROPERTY(maxYear, NSInteger)
 
 @end
