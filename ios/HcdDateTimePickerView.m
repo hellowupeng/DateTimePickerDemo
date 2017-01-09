@@ -29,18 +29,18 @@
 
 @interface HcdDateTimePickerView()<UIGestureRecognizerDelegate>
 {
-    UIView                      *timeBroadcastView;//定时播放显示视图
-    UIView                      *topView;
-    UILabel                     *titleLbl;
-    MXSCycleScrollView          *yearScrollView;//年份滚动视图
-    MXSCycleScrollView          *monthScrollView;//月份滚动视图
-    MXSCycleScrollView          *dayScrollView;//日滚动视图
-    MXSCycleScrollView          *hourScrollView;//时滚动视图
-    MXSCycleScrollView          *minuteScrollView;//分滚动视图
-    MXSCycleScrollView          *secondScrollView;//秒滚动视图
-    UIButton                    *okBtn;//自定义picker上的确认按钮
-    UIButton                    *cancleBtn;//
-    NSString                    *dateTimeStr;
+  UIView                      *timeBroadcastView;//定时播放显示视图
+  UIView                      *topView;
+  UILabel                     *titleLbl;
+  MXSCycleScrollView          *yearScrollView;//年份滚动视图
+  MXSCycleScrollView          *monthScrollView;//月份滚动视图
+  MXSCycleScrollView          *dayScrollView;//日滚动视图
+  MXSCycleScrollView          *hourScrollView;//时滚动视图
+  MXSCycleScrollView          *minuteScrollView;//分滚动视图
+  MXSCycleScrollView          *secondScrollView;//秒滚动视图
+  UIButton                    *okBtn;//自定义picker上的确认按钮
+  UIButton                    *cancleBtn;//
+  NSString                    *dateTimeStr;
 }
 
 @property (nonatomic,assign) NSInteger curYear;//当前年
@@ -56,48 +56,48 @@
 
 - (instancetype)initWithDefaultDatetime:(NSDate *)dateTime
 {
-    self = [super init];
-    if (self) {
-        self.defaultDate = dateTime;
-        if (!self.defaultDate) {
-            self.defaultDate = [NSDate date];
-        }
-        self.datePickerMode = DatePickerDateTimeMode;
-        [self initDatas];
-        [self setTimeBroadcastView];
-    }
-    return self;
+  self = [super init];
+  if (self) {
+      self.defaultDate = dateTime;
+      if (!self.defaultDate) {
+          self.defaultDate = [NSDate date];
+      }
+      self.datePickerMode = DatePickerDateTimeMode;
+      [self initDatas];
+      [self setTimeBroadcastView];
+  }
+  return self;
 }
 
 - (instancetype)initWithDatePickerMode:(DatePickerMode)datePickerMode defaultDateTime:(NSDate *)dateTime
 {
-    self = [super init];
-    if (self) {
-        self.defaultDate = dateTime;
-        if (!self.defaultDate) {
-            self.defaultDate = [NSDate date];
-        }
-        self.datePickerMode = datePickerMode;
-        [self initDatas];
-        [self setTimeBroadcastView];
-    }
-    return self;
+  self = [super init];
+  if (self) {
+      self.defaultDate = dateTime;
+      if (!self.defaultDate) {
+          self.defaultDate = [NSDate date];
+      }
+      self.datePickerMode = datePickerMode;
+      [self initDatas];
+      [self setTimeBroadcastView];
+  }
+  return self;
 }
 
 - (void)setMaxYear:(NSInteger)maxYear {
-    _maxYear = maxYear;
-    [self updateYearScrollView];
+  _maxYear = maxYear;
+  [self updateYearScrollView];
 }
+
 - (void)setMinYear:(NSInteger)minYear {
-    _minYear = minYear;
-    [self updateYearScrollView];
+  _minYear = minYear;
+  [self updateYearScrollView];
 }
 
 - (void)updateYearScrollView {
-    [yearScrollView reloadData];
-    
-    [yearScrollView setCurrentSelectPage:(self.curYear-(_minYear+2))];
-    [self setAfterScrollShowView:yearScrollView andCurrentPage:1];
+  [yearScrollView reloadData];
+  [yearScrollView setCurrentSelectPage:(self.curYear-(_minYear+2))];
+  [self setAfterScrollShowView:yearScrollView andCurrentPage:1];
 }
 
 /*

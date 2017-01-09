@@ -35,7 +35,6 @@ export default class Picker extends Component {
   }
 
   componentDidMount() {
-    this.defaultTime = '2019-10-10 06:25:22';
   }
 
   componentWillUnmount() {
@@ -46,31 +45,24 @@ export default class Picker extends Component {
   }
 
   hide() {
-    this.onPickerCancel();
-  }
-
-  onPickerConfirm(event) {
-    console.log('event ----- ', event.nativeEvent.data);
-    this.setState({ showPicker: false });
-  }
-
-  onPickerCancel(event) {
-    console.log('event ----- ', event.nativeEvent.data);
     this.setState({ showPicker: false });
   }
 
   render() {
     const { showPicker } = this.state;
     if (!showPicker) return null;
+    const { minYear, maxYear, datePickerMode, title, onPickerConfirm, onPickerCancel, defaultTime } = this.props;
+    console.log('js defaultTime ----', defaultTime);
     return (
-      <RNPickerView style={styles.picker}
-        {...this.props}
-        onPickerConfirm={(event) => this.onPickerConfirm(event)}
-        onPickerCancel={(event) => this.onPickerCancel(event)}
-        minYear={2016}
-        maxYear={2019}
-        datePickerMode={7}
-        defaultTime={this.defaultTime}
+      <RNPickerView
+        style={styles.picker}
+        minYear={minYear}
+        maxYear={maxYear}
+        datePickerMode={datePickerMode}
+        defaultTime={defaultTime}
+        title={title}
+        onPickerConfirm={(event) => onPickerConfirm(event.nativeEvent.data)}
+        onPickerCancel={(event) => onPickerCancel(event.nativeEvent.data)}
       />
     );
   }

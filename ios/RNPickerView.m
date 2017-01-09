@@ -23,17 +23,16 @@
   __weak RNPickerView *weakSelf = self;
   _picker = [[HcdDateTimePickerView alloc] initWithDatePickerMode:DatePickerDateMode defaultDateTime:[[NSDate alloc] initWithTimeIntervalSinceNow:0]];
   _picker.topViewColor = [UIColor greenColor];
-  _picker.title = @"提示文字";
+//  _picker.title = @"";
   _picker.titleColor = [UIColor grayColor];
   _picker.clickedOkBtn = ^(NSString * datetimeStr){
     RNPickerView *innerself = weakSelf;
-    //      NSLog(@"%@", datetimeStr);
-    NSDictionary *params = @{@"data": @"12345"};
+    NSDictionary *params = @{@"data": datetimeStr};
     innerself.onPickerConfirm(params);
   };
   _picker.clickedCancelButton = ^{
     RNPickerView *innerSelf = weakSelf;
-    NSDictionary *params = @{@"data": @"54321"};
+    NSDictionary *params = @{@"data": @"0"};
     innerSelf.onPickerCancel(params);
   };
   [self addSubview:_picker];
@@ -91,9 +90,7 @@
 }
 // 选中时间
 - (void)setDefaultTime:(NSString *)defaultTime {
-  NSLog(@"default time ---- %@", defaultTime);
   NSDate *date = [self dateFromString:defaultTime];
-  NSLog(@"date --- %@", date);
   _picker.defaultDate = date;
 }
 
@@ -102,6 +99,10 @@
   dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
   NSDate *date = [dateFormatter dateFromString:string];
   return date;
+}
+
+- (void)setTitle:(NSString *)title {
+  _picker.title = title;
 }
 
 @end

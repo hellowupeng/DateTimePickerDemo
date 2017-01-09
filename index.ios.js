@@ -18,24 +18,53 @@ import Picker from './PickerView';
 export default class DatePickerDemo extends Component {
   constructor(props) {
     super(props);
-    this.state = { showPicker: false };
+    this.state = {
+      showPicker: false,
+      selectedValue: '',
+    };
+  }
+
+  componentDidMount() {
+    this.defaultTime = '2019-10-10 06:25:22';
+  }
+  
+  componentWillUnmount() {
   }
 
   show() {
     this.picker.show();
   }
 
+  onPickerConfirm(data) {
+    console.log('data ----- ', data);
+    this.setState({ selectedValue: data });
+    this.picker.hide();
+  }
+
+  onPickerCancel(data) {
+    console.log('data ----- ', data);
+    this.picker.hide();
+  }
+
   render() {
-    const { showPicker } = this.state;
+    const { showPicker, selectedValue } = this.state;
     return (
       <View style={styles.container}>
-        <View style={{ flexDirection: 'row'}}>
-        <Text style={styles.welcome} onPress={() => this.show()}>
-          show Picker
-        </Text>
+        <View>
+          <Text>{selectedValue}</Text>
+          <Text style={styles.welcome} onPress={() => this.show()}>
+            show Picker
+          </Text>
         </View>
         <Picker
           ref={picker => this.picker = picker}
+          minYear={2016}
+          maxYear={2019}
+          datePickerMode={7}
+          title={'填写日期'}
+          defaultTime={'2017-10-10 06:25:22'}
+          onPickerConfirm={(data) => this.onPickerConfirm(data)}
+          onPickerCancel={(data) => this.onPickerCancel(data)}
         />
       </View>
     );
