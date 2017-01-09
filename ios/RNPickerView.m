@@ -22,7 +22,6 @@
 - (void)initDatePickerView {
   __weak RNPickerView *weakSelf = self;
   _picker = [[HcdDateTimePickerView alloc] initWithDatePickerMode:DatePickerDateHourMinuteMode defaultDateTime:[[NSDate alloc] initWithTimeIntervalSinceNow:0]];
-  NSLog(@"datePickerMode ---- %u", _picker.datePickerMode);
   _picker.topViewColor = [UIColor greenColor];
   _picker.title = @"提示文字";
   _picker.titleColor = [UIColor grayColor];
@@ -34,7 +33,6 @@
   };
   _picker.clickedCancelButton = ^{
     RNPickerView *innerSelf = weakSelf;
-    NSLog(@"clicked cancel button");
     NSDictionary *params = @{@"data": @"54321"};
     innerSelf.onPickerCancel(params);
   };
@@ -43,7 +41,6 @@
 }
 
 - (void)setMinYear:(NSInteger)minYear {
-  NSLog(@"minYear ---- %ld", minYear);
   _picker.minYear = minYear;
 }
 
@@ -52,7 +49,6 @@
 }
 
 - (void)setMaxYear:(NSInteger)maxYear {
-  NSLog(@"maxYear --- %ld", maxYear);
   _picker.maxYear = maxYear;
 }
 
@@ -67,6 +63,21 @@
       break;
     case 2:
       _picker.datePickerMode = DatePickerTimeMode;
+      break;
+    case 3:
+      _picker.datePickerMode = DatePickerDateTimeMode;
+      break;
+    case 4:
+      _picker.datePickerMode = DatePickerYearMonthMode;
+      break;
+    case 5:
+      _picker.datePickerMode = DatePickerMonthDayMode;
+      break;
+    case 6:
+      _picker.datePickerMode = DatePickerHourMinuteMode;
+      break;
+    case 7:
+      _picker.datePickerMode = DatePickerDateHourMinuteMode;
       break;
       
     default:

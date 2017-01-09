@@ -143,109 +143,139 @@
     _title = title;
     titleLbl.text = title;
 }
+// custom
+- (void)setDatePickerMode:(DatePickerMode)datePickerMode {
+  NSLog(@"new datePicker mode ---- %d", datePickerMode);
+  _datePickerMode = datePickerMode;
+  [self updateDateMode];
+}
 
 #pragma mark -custompicker
 //设置自定义datepicker界面
 - (void)setTimeBroadcastView
 {
     
-    [self setFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height)];
-    [self setBackgroundColor:[UIColor clearColor]];
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    dateTimeStr = [dateFormatter stringFromDate:self.defaultDate];
-    
-    topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, kTopViewHeight)];
-    topView.backgroundColor = _topViewColor;
-    
-    okBtn = [[UIButton alloc]initWithFrame:CGRectMake(kScreen_Width-60, 0, 60, kTopViewHeight)];
-    [okBtn setTitleColor:_buttonTitleColor forState:UIControlStateNormal];
-    okBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-    [okBtn setBackgroundColor:[UIColor clearColor]];
-    [okBtn setTitle:@"确定" forState:UIControlStateNormal];
-    [okBtn addTarget:self action:@selector(selectedButtons:) forControlEvents:UIControlEventTouchUpInside];
-    okBtn.tag = kOKBtnTag;
-    [self addSubview:okBtn];
-    
-    cancleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, kTopViewHeight)];
-    cancleBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-    [cancleBtn setTitleColor:_buttonTitleColor forState:UIControlStateNormal];
-    [cancleBtn setBackgroundColor:[UIColor clearColor]];
-    [cancleBtn setTitle:@"取消" forState:UIControlStateNormal];
-    [cancleBtn addTarget:self action:@selector(selectedButtons:) forControlEvents:UIControlEventTouchUpInside];
-    cancleBtn.tag = kCancleBtnTag;
-    [self addSubview:cancleBtn];
-    
-    titleLbl = [[UILabel alloc]initWithFrame:CGRectMake(60, 0, kScreen_Width - 120, kTopViewHeight)];
-    titleLbl.textAlignment = NSTextAlignmentCenter;
-    titleLbl.font = [UIFont systemFontOfSize:14];
-    
-    [topView addSubview:okBtn];
-    [topView addSubview:cancleBtn];
-    [topView addSubview:titleLbl];
-    
-    timeBroadcastView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, kTimeBroadcastViewHeight)];
-    timeBroadcastView.backgroundColor = [UIColor redColor];
-    timeBroadcastView.layer.cornerRadius = 0;//设置视图圆角
-    timeBroadcastView.layer.masksToBounds = YES;
-    CGColorRef cgColor = [UIColor colorWithRed:221.0/255.0 green:221.0/255.0 blue:221.0/255.0 alpha:1.0].CGColor;
-    timeBroadcastView.layer.borderColor = cgColor;
-    timeBroadcastView.layer.borderWidth = 0.0;
-    timeBroadcastView.backgroundColor = [UIColor whiteColor];
-    [self addSubview:timeBroadcastView];
-    UIView *beforeSepLine = [[UIView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + (kTimeBroadcastViewHeight / 5), kScreen_Width, 1.5)];
-    [beforeSepLine setBackgroundColor:[UIColor colorWithHexString:@"0xEDEDED"]];
-    [timeBroadcastView addSubview:beforeSepLine];
-    UIView *middleSepView = [[UIView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + 2 * (kTimeBroadcastViewHeight / 5), kScreen_Width, kTimeBroadcastViewHeight / 5)];
-    [middleSepView setBackgroundColor:[UIColor colorWithHexString:@"0xEDEDED"]];
-    [timeBroadcastView addSubview:middleSepView];
-    middleSepView.layer.borderWidth = 1.5;
-    middleSepView.layer.borderColor = [UIColor colorWithHexString:@"0xEDEDED"].CGColor;
-    UIView *bottomSepLine = [[UIView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + 4 * (kTimeBroadcastViewHeight / 5), kScreen_Width, 1.5)];
-    [bottomSepLine setBackgroundColor:[UIColor colorWithHexString:@"0xEDEDED"]];
-    [timeBroadcastView addSubview:bottomSepLine];
-    
-    if (self.datePickerMode == DatePickerDateMode) {
-        [self setYearScrollView];
-        [self setMonthScrollView];
-        [self setDayScrollView];
-    }
-    else if (self.datePickerMode == DatePickerTimeMode) {
-        [self setHourScrollView];
-        [self setMinuteScrollView];
-        [self setSecondScrollView];
-    }
-    else if (self.datePickerMode == DatePickerDateTimeMode) {
-        [self setYearScrollView];
-        [self setMonthScrollView];
-        [self setDayScrollView];
-        [self setHourScrollView];
-        [self setMinuteScrollView];
-        [self setSecondScrollView];
-    }
-    else if (self.datePickerMode == DatePickerYearMonthMode) {
-        [self setYearScrollView];
-        [self setMonthScrollView];
-    }
-    else if (self.datePickerMode == DatePickerMonthDayMode) {
-        [self setMonthScrollView];
-        [self setDayScrollView];
-    }
-    else if (self.datePickerMode == DatePickerHourMinuteMode) {
-        [self setHourScrollView];
-        [self setMinuteScrollView];
-    }
-    else if (self.datePickerMode == DatePickerDateHourMinuteMode) {
-        [self setYearScrollView];
-        [self setMonthScrollView];
-        [self setDayScrollView];
-        [self setHourScrollView];
-        [self setMinuteScrollView];
-    }
-    
-    [timeBroadcastView addSubview:topView];
-    [timeBroadcastView setFrame:CGRectMake(0, kScreen_Height-100, kScreen_Width, kDatePickerHeight)];
+  [self setFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height)];
+  [self setBackgroundColor:[UIColor clearColor]];
+  
+  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+  [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+  dateTimeStr = [dateFormatter stringFromDate:self.defaultDate];
+  
+  topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, kTopViewHeight)];
+  topView.backgroundColor = _topViewColor;
+  
+  okBtn = [[UIButton alloc]initWithFrame:CGRectMake(kScreen_Width-60, 0, 60, kTopViewHeight)];
+  [okBtn setTitleColor:_buttonTitleColor forState:UIControlStateNormal];
+  okBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+  [okBtn setBackgroundColor:[UIColor clearColor]];
+  [okBtn setTitle:@"确定" forState:UIControlStateNormal];
+  [okBtn addTarget:self action:@selector(selectedButtons:) forControlEvents:UIControlEventTouchUpInside];
+  okBtn.tag = kOKBtnTag;
+  [self addSubview:okBtn];
+  
+  cancleBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 60, kTopViewHeight)];
+  cancleBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+  [cancleBtn setTitleColor:_buttonTitleColor forState:UIControlStateNormal];
+  [cancleBtn setBackgroundColor:[UIColor clearColor]];
+  [cancleBtn setTitle:@"取消" forState:UIControlStateNormal];
+  [cancleBtn addTarget:self action:@selector(selectedButtons:) forControlEvents:UIControlEventTouchUpInside];
+  cancleBtn.tag = kCancleBtnTag;
+  [self addSubview:cancleBtn];
+  
+  titleLbl = [[UILabel alloc]initWithFrame:CGRectMake(60, 0, kScreen_Width - 120, kTopViewHeight)];
+  titleLbl.textAlignment = NSTextAlignmentCenter;
+  titleLbl.font = [UIFont systemFontOfSize:14];
+  
+  [topView addSubview:okBtn];
+  [topView addSubview:cancleBtn];
+  [topView addSubview:titleLbl];
+  
+  timeBroadcastView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, kTimeBroadcastViewHeight)];
+  timeBroadcastView.backgroundColor = [UIColor redColor];
+  timeBroadcastView.layer.cornerRadius = 0;//设置视图圆角
+  timeBroadcastView.layer.masksToBounds = YES;
+  CGColorRef cgColor = [UIColor colorWithRed:221.0/255.0 green:221.0/255.0 blue:221.0/255.0 alpha:1.0].CGColor;
+  timeBroadcastView.layer.borderColor = cgColor;
+  timeBroadcastView.layer.borderWidth = 0.0;
+  timeBroadcastView.backgroundColor = [UIColor whiteColor];
+  [self addSubview:timeBroadcastView];
+  UIView *beforeSepLine = [[UIView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + (kTimeBroadcastViewHeight / 5), kScreen_Width, 1.5)];
+  [beforeSepLine setBackgroundColor:[UIColor colorWithHexString:@"0xEDEDED"]];
+  [timeBroadcastView addSubview:beforeSepLine];
+  UIView *middleSepView = [[UIView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + 2 * (kTimeBroadcastViewHeight / 5), kScreen_Width, kTimeBroadcastViewHeight / 5)];
+  [middleSepView setBackgroundColor:[UIColor colorWithHexString:@"0xEDEDED"]];
+  [timeBroadcastView addSubview:middleSepView];
+  middleSepView.layer.borderWidth = 1.5;
+  middleSepView.layer.borderColor = [UIColor colorWithHexString:@"0xEDEDED"].CGColor;
+  UIView *bottomSepLine = [[UIView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + 4 * (kTimeBroadcastViewHeight / 5), kScreen_Width, 1.5)];
+  [bottomSepLine setBackgroundColor:[UIColor colorWithHexString:@"0xEDEDED"]];
+  [timeBroadcastView addSubview:bottomSepLine];
+  [self updateDateMode];
+  [timeBroadcastView addSubview:topView];
+  [timeBroadcastView setFrame:CGRectMake(0, kScreen_Height-100, kScreen_Width, kDatePickerHeight)];
+}
+
+- (void)updateDateMode {
+  [self removeOldView];
+  if (self.datePickerMode == DatePickerDateMode) {
+    [self setYearScrollView];
+    [self setMonthScrollView];
+    [self setDayScrollView];
+  }
+  else if (self.datePickerMode == DatePickerTimeMode) {
+    [self setHourScrollView];
+    [self setMinuteScrollView];
+    [self setSecondScrollView];
+  }
+  else if (self.datePickerMode == DatePickerDateTimeMode) {
+    [self setYearScrollView];
+    [self setMonthScrollView];
+    [self setDayScrollView];
+    [self setHourScrollView];
+    [self setMinuteScrollView];
+    [self setSecondScrollView];
+  }
+  else if (self.datePickerMode == DatePickerYearMonthMode) {
+    [self setYearScrollView];
+    [self setMonthScrollView];
+  }
+  else if (self.datePickerMode == DatePickerMonthDayMode) {
+    [self setMonthScrollView];
+    [self setDayScrollView];
+  }
+  else if (self.datePickerMode == DatePickerHourMinuteMode) {
+    [self setHourScrollView];
+    [self setMinuteScrollView];
+  }
+  else if (self.datePickerMode == DatePickerDateHourMinuteMode) {
+    [self setYearScrollView];
+    [self setMonthScrollView];
+    [self setDayScrollView];
+    [self setHourScrollView];
+    [self setMinuteScrollView];
+  }
+}
+
+- (void)removeOldView {
+  if (yearScrollView) {
+    [yearScrollView removeFromSuperview];
+  }
+  if (monthScrollView) {
+    [monthScrollView removeFromSuperview];
+  }
+  if (dayScrollView) {
+    [dayScrollView removeFromSuperview];
+  }
+  if (hourScrollView) {
+    [hourScrollView removeFromSuperview];
+  }
+  if (minuteScrollView) {
+    [minuteScrollView removeFromSuperview];
+  }
+  if (secondScrollView) {
+    [secondScrollView removeFromSuperview];
+  }
 }
 //设置年月日时分的滚动视图
 - (void)setYearScrollView

@@ -64,7 +64,7 @@ export default class Picker extends Component {
         onPickerCancel={(event) => this.onPickerCancel(event)}
         minYear={2016}
         maxYear={2019}
-        datePickerMode={1}
+        datePickerMode={7}
       />
     );
   }
