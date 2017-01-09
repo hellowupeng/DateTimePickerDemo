@@ -26,5 +26,6 @@ RCT_EXPORT_VIEW_PROPERTY(onPickerCancel, RCTBubblingEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(minYear, NSInteger)
 RCT_EXPORT_VIEW_PROPERTY(maxYear, NSInteger)
 RCT_EXPORT_VIEW_PROPERTY(datePickerMode, NSInteger)
+RCT_EXPORT_VIEW_PROPERTY(defaultTime, NSString)
 
 @end

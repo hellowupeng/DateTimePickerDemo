@@ -418,9 +418,17 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		E825056A1E233C0600E4587A /* helper */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = helper;
+			sourceTree = "<group>";
+		};
 		E850B19A1E10E05B00DE8C62 /* Picker */ = {
 			isa = PBXGroup;
 			children = (
+				E825056A1E233C0600E4587A /* helper */,
 				E8211CA71E12122E00BC919C /* RNPickerViewManager.h */,
 				E8211CA81E12122E00BC919C /* RNPickerViewManager.m */,
 				E8211CB91E12479200BC919C /* RNPickerView.h */,

@@ -18,5 +18,6 @@
 @property (nonatomic, assign) NSInteger minYear;
 @property (nonatomic, assign) NSInteger maxYear;
 @property (nonatomic, assign) NSInteger datePickerMode;
+@property (nonatomic, copy) NSString *defaultTime;
 
 @end

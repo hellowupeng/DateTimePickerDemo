@@ -55,6 +55,7 @@ typedef void (^ClickedCancelButton)(void);
 @property (nonatomic,strong) UIColor *titleColor;
 
 @property (nonatomic,weak  ) NSString *title;
+@property (nonatomic, retain) NSDate *defaultDate;
 
 -(instancetype)initWithDefaultDatetime:(NSDate*)dateTime;
 -(instancetype)initWithDatePickerMode:(DatePickerMode)datePickerMode defaultDateTime:(NSDate*)dateTime;

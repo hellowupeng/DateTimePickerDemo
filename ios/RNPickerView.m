@@ -21,7 +21,7 @@
 
 - (void)initDatePickerView {
   __weak RNPickerView *weakSelf = self;
-  _picker = [[HcdDateTimePickerView alloc] initWithDatePickerMode:DatePickerDateHourMinuteMode defaultDateTime:[[NSDate alloc] initWithTimeIntervalSinceNow:0]];
+  _picker = [[HcdDateTimePickerView alloc] initWithDatePickerMode:DatePickerDateMode defaultDateTime:[[NSDate alloc] initWithTimeIntervalSinceNow:0]];
   _picker.topViewColor = [UIColor greenColor];
   _picker.title = @"提示文字";
   _picker.titleColor = [UIColor grayColor];
@@ -88,6 +88,20 @@
 
 - (NSInteger)datePickerMode {
   return _picker.datePickerMode;
+}
+// 选中时间
+- (void)setDefaultTime:(NSString *)defaultTime {
+  NSLog(@"default time ---- %@", defaultTime);
+  NSDate *date = [self dateFromString:defaultTime];
+  NSLog(@"date --- %@", date);
+  _picker.defaultDate = date;
+}
+
+- (NSDate *)dateFromString:(NSString *)string {
+  NSDateFormatter *dateFormatter = [NSDateFormatter new];
+  dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+  NSDate *date = [dateFormatter dateFromString:string];
+  return date;
 }
 
 @end

@@ -22,6 +22,10 @@ export default class Picker extends Component {
      * 最大年份
      */
     maxYear: React.PropTypes.number,
+    /**
+     * 设置默认选中日期时间
+     */
+    defaultTime: React.PropTypes.string,
   };
   constructor(props) {
     super(props);
@@ -31,6 +35,7 @@ export default class Picker extends Component {
   }
 
   componentDidMount() {
+    this.defaultTime = '2019-10-10 06:25:22';
   }
 
   componentWillUnmount() {
@@ -65,6 +70,7 @@ export default class Picker extends Component {
         minYear={2016}
         maxYear={2019}
         datePickerMode={7}
+        defaultTime={this.defaultTime}
       />
     );
   }

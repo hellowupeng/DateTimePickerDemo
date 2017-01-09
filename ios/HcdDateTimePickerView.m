@@ -50,8 +50,6 @@
 @property (nonatomic,assign) NSInteger curMin;//当前分
 @property (nonatomic,assign) NSInteger curSecond;//当前秒
 
-@property (nonatomic, retain) NSDate *defaultDate;
-
 @end
 
 @implementation HcdDateTimePickerView
@@ -145,8 +143,12 @@
 }
 // custom
 - (void)setDatePickerMode:(DatePickerMode)datePickerMode {
-  NSLog(@"new datePicker mode ---- %d", datePickerMode);
   _datePickerMode = datePickerMode;
+  [self updateDateMode];
+}
+
+- (void)setDefaultDate:(NSDate *)defaultDate {
+  _defaultDate = defaultDate;
   [self updateDateMode];
 }
 
@@ -154,7 +156,6 @@
 //设置自定义datepicker界面
 - (void)setTimeBroadcastView
 {
-    
   [self setFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height)];
   [self setBackgroundColor:[UIColor clearColor]];
   
@@ -280,120 +281,140 @@
 //设置年月日时分的滚动视图
 - (void)setYearScrollView
 {
-    if (self.datePickerMode == DatePickerDateTimeMode) {
-        yearScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight, kScreen_Width*0.25, kTimeBroadcastViewHeight)];
-    } else if (self.datePickerMode == DatePickerDateMode) {
-        yearScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight, kScreen_Width*0.34, kTimeBroadcastViewHeight)];
-    } else if (self.datePickerMode == DatePickerYearMonthMode) {
-        yearScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
-    } else if (self.datePickerMode == DatePickerDateHourMinuteMode) {
-        yearScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight, kScreen_Width*0.28, kTimeBroadcastViewHeight)];
-    }
-    
-    self.curYear = [self setNowTimeShow:0];
-    [yearScrollView setCurrentSelectPage:(self.curYear-(_minYear+2))];
-    yearScrollView.delegate = self;
-    yearScrollView.datasource = self;
-    [self setAfterScrollShowView:yearScrollView andCurrentPage:1];
-    [timeBroadcastView addSubview:yearScrollView];
+  if (self.datePickerMode == DatePickerDateTimeMode) {
+      yearScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight, kScreen_Width*0.25, kTimeBroadcastViewHeight)];
+  } else if (self.datePickerMode == DatePickerDateMode) {
+      yearScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight, kScreen_Width*0.34, kTimeBroadcastViewHeight)];
+  } else if (self.datePickerMode == DatePickerYearMonthMode) {
+      yearScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
+  } else if (self.datePickerMode == DatePickerDateHourMinuteMode) {
+      yearScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight, kScreen_Width*0.28, kTimeBroadcastViewHeight)];
+  }
+  [self updateCurrentYear];
+  yearScrollView.delegate = self;
+  yearScrollView.datasource = self;
+  [self setAfterScrollShowView:yearScrollView andCurrentPage:1];
+  [timeBroadcastView addSubview:yearScrollView];
+}
+// 更新年份显示
+- (void)updateCurrentYear {
+  self.curYear = [self setNowTimeShow:0];
+  [yearScrollView setCurrentSelectPage:(self.curYear-(_minYear+2))];
 }
 //设置年月日时分的滚动视图
 - (void)setMonthScrollView
 {
-    if (self.datePickerMode == DatePickerDateTimeMode) {
-        monthScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.25, kTopViewHeight, kScreen_Width*0.15, kTimeBroadcastViewHeight)];
-    } else if (self.datePickerMode == DatePickerDateMode) {
-        monthScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.34, kTopViewHeight, kScreen_Width*0.33, kTimeBroadcastViewHeight)];
-    } else if (self.datePickerMode == DatePickerMonthDayMode) {
-        monthScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0, kTopViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
-    } else if (self.datePickerMode == DatePickerYearMonthMode) {
-        monthScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.5, kTopViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
-    } else if (self.datePickerMode == DatePickerDateHourMinuteMode) {
-        monthScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.28, kTopViewHeight, kScreen_Width*0.18, kTimeBroadcastViewHeight)];
-    }
-    
-    self.curMonth = [self setNowTimeShow:1];
-    [monthScrollView setCurrentSelectPage:(self.curMonth-3)];
-    monthScrollView.delegate = self;
-    monthScrollView.datasource = self;
-    [self setAfterScrollShowView:monthScrollView andCurrentPage:1];
-    [timeBroadcastView addSubview:monthScrollView];
+  if (self.datePickerMode == DatePickerDateTimeMode) {
+      monthScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.25, kTopViewHeight, kScreen_Width*0.15, kTimeBroadcastViewHeight)];
+  } else if (self.datePickerMode == DatePickerDateMode) {
+      monthScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.34, kTopViewHeight, kScreen_Width*0.33, kTimeBroadcastViewHeight)];
+  } else if (self.datePickerMode == DatePickerMonthDayMode) {
+      monthScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0, kTopViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
+  } else if (self.datePickerMode == DatePickerYearMonthMode) {
+      monthScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.5, kTopViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
+  } else if (self.datePickerMode == DatePickerDateHourMinuteMode) {
+      monthScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.28, kTopViewHeight, kScreen_Width*0.18, kTimeBroadcastViewHeight)];
+  }
+  [self updateCurrentMonth];
+  monthScrollView.delegate = self;
+  monthScrollView.datasource = self;
+  [self setAfterScrollShowView:monthScrollView andCurrentPage:1];
+  [timeBroadcastView addSubview:monthScrollView];
+}
+// 更新当前显示月份
+- (void)updateCurrentMonth {
+  self.curMonth = [self setNowTimeShow:1];
+  [monthScrollView setCurrentSelectPage:(self.curMonth-3)];
 }
 //设置年月日时分的滚动视图
 - (void)setDayScrollView
 {
-    if (self.datePickerMode == DatePickerDateTimeMode) {
-        dayScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.40, kTopViewHeight, kScreen_Width*0.15, kTimeBroadcastViewHeight)];
-    } else if (self.datePickerMode == DatePickerDateMode) {
-        dayScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.67, kTopViewHeight, kScreen_Width*0.33, kTimeBroadcastViewHeight)];
-    } else if (self.datePickerMode == DatePickerMonthDayMode) {
-        dayScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.5, kTopViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
-    } else if (self.datePickerMode == DatePickerDateHourMinuteMode) {
-        dayScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.46, kTopViewHeight, kScreen_Width*0.18, kTimeBroadcastViewHeight)];
-    }
-    
-    self.curDay = [self setNowTimeShow:2];
-    [dayScrollView setCurrentSelectPage:(self.curDay-3)];
-    dayScrollView.delegate = self;
-    dayScrollView.datasource = self;
-    [self setAfterScrollShowView:dayScrollView andCurrentPage:1];
-    [timeBroadcastView addSubview:dayScrollView];
+  if (self.datePickerMode == DatePickerDateTimeMode) {
+      dayScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.40, kTopViewHeight, kScreen_Width*0.15, kTimeBroadcastViewHeight)];
+  } else if (self.datePickerMode == DatePickerDateMode) {
+      dayScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.67, kTopViewHeight, kScreen_Width*0.33, kTimeBroadcastViewHeight)];
+  } else if (self.datePickerMode == DatePickerMonthDayMode) {
+      dayScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.5, kTopViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
+  } else if (self.datePickerMode == DatePickerDateHourMinuteMode) {
+      dayScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.46, kTopViewHeight, kScreen_Width*0.18, kTimeBroadcastViewHeight)];
+  }
+  [self updateCurrentDay];
+  dayScrollView.delegate = self;
+  dayScrollView.datasource = self;
+  [self setAfterScrollShowView:dayScrollView andCurrentPage:1];
+  [timeBroadcastView addSubview:dayScrollView];
+}
+// 更新当前日期
+- (void)updateCurrentDay {
+  self.curDay = [self setNowTimeShow:2];
+  [dayScrollView setCurrentSelectPage:(self.curDay-3)];
 }
 //设置年月日时分的滚动视图
 - (void)setHourScrollView
 {
-    if (self.datePickerMode == DatePickerDateTimeMode) {
-        hourScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.55, kTopViewHeight, kScreen_Width*0.15, kTimeBroadcastViewHeight)];
-    } else if (self.datePickerMode == DatePickerTimeMode) {
-        hourScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight, kScreen_Width*0.34, kTimeBroadcastViewHeight)];
-    } else if (self.datePickerMode == DatePickerHourMinuteMode) {
-        hourScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
-    } else if (self.datePickerMode == DatePickerDateHourMinuteMode) {
-        hourScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.64, kTopViewHeight, kScreen_Width*0.18, kTimeBroadcastViewHeight)];
-    }
-    
-    self.curHour = [self setNowTimeShow:3];
-    [hourScrollView setCurrentSelectPage:(self.curHour-2)];
-    hourScrollView.delegate = self;
-    hourScrollView.datasource = self;
-    [self setAfterScrollShowView:hourScrollView andCurrentPage:1];
-    [timeBroadcastView addSubview:hourScrollView];
+  if (self.datePickerMode == DatePickerDateTimeMode) {
+      hourScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.55, kTopViewHeight, kScreen_Width*0.15, kTimeBroadcastViewHeight)];
+  } else if (self.datePickerMode == DatePickerTimeMode) {
+      hourScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight, kScreen_Width*0.34, kTimeBroadcastViewHeight)];
+  } else if (self.datePickerMode == DatePickerHourMinuteMode) {
+      hourScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
+  } else if (self.datePickerMode == DatePickerDateHourMinuteMode) {
+      hourScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.64, kTopViewHeight, kScreen_Width*0.18, kTimeBroadcastViewHeight)];
+  }
+  [self updateCurrentHour];
+  hourScrollView.delegate = self;
+  hourScrollView.datasource = self;
+  [self setAfterScrollShowView:hourScrollView andCurrentPage:1];
+  [timeBroadcastView addSubview:hourScrollView];
+}
+
+- (void)updateCurrentHour {
+  self.curHour = [self setNowTimeShow:3];
+  [hourScrollView setCurrentSelectPage:(self.curHour-2)];
 }
 //设置年月日时分的滚动视图
 - (void)setMinuteScrollView
 {
-    if (self.datePickerMode == DatePickerDateTimeMode) {
-        minuteScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.70, kTopViewHeight, kScreen_Width*0.15, kTimeBroadcastViewHeight)];
-    } else if (self.datePickerMode == DatePickerTimeMode) {
-        minuteScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.34, kTopViewHeight, kScreen_Width*0.33, kTimeBroadcastViewHeight)];
-    } else if (self.datePickerMode == DatePickerHourMinuteMode) {
-        minuteScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.5, kTopViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
-    } else if (self.datePickerMode == DatePickerDateHourMinuteMode) {
-        minuteScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.82, kTopViewHeight, kScreen_Width*0.18, kTimeBroadcastViewHeight)];
-    }
-    
-    self.curMin = [self setNowTimeShow:4];
-    [minuteScrollView setCurrentSelectPage:(self.curMin-2)];
-    minuteScrollView.delegate = self;
-    minuteScrollView.datasource = self;
-    [self setAfterScrollShowView:minuteScrollView andCurrentPage:1];
-    [timeBroadcastView addSubview:minuteScrollView];
+  if (self.datePickerMode == DatePickerDateTimeMode) {
+      minuteScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.70, kTopViewHeight, kScreen_Width*0.15, kTimeBroadcastViewHeight)];
+  } else if (self.datePickerMode == DatePickerTimeMode) {
+      minuteScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.34, kTopViewHeight, kScreen_Width*0.33, kTimeBroadcastViewHeight)];
+  } else if (self.datePickerMode == DatePickerHourMinuteMode) {
+      minuteScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.5, kTopViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
+  } else if (self.datePickerMode == DatePickerDateHourMinuteMode) {
+      minuteScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.82, kTopViewHeight, kScreen_Width*0.18, kTimeBroadcastViewHeight)];
+  }
+  [self updateCurrentMin];
+  minuteScrollView.delegate = self;
+  minuteScrollView.datasource = self;
+  [self setAfterScrollShowView:minuteScrollView andCurrentPage:1];
+  [timeBroadcastView addSubview:minuteScrollView];
+}
+
+- (void)updateCurrentMin {
+  self.curMin = [self setNowTimeShow:4];
+  [minuteScrollView setCurrentSelectPage:(self.curMin-2)];
 }
 //设置年月日时分的滚动视图
 - (void)setSecondScrollView
 {
-    if (self.datePickerMode == DatePickerDateTimeMode) {
-        secondScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.85, kTopViewHeight, kScreen_Width*0.15, kTimeBroadcastViewHeight)];
-    } else if (self.datePickerMode == DatePickerTimeMode) {
-        secondScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.67, kTopViewHeight, kScreen_Width*0.33, kTimeBroadcastViewHeight)];
-    }
-    self.curSecond = [self setNowTimeShow:5];
-    [secondScrollView setCurrentSelectPage:(self.curSecond-2)];
-    secondScrollView.delegate = self;
-    secondScrollView.datasource = self;
-    [self setAfterScrollShowView:secondScrollView andCurrentPage:1];
-    [timeBroadcastView addSubview:secondScrollView];
+  if (self.datePickerMode == DatePickerDateTimeMode) {
+      secondScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.85, kTopViewHeight, kScreen_Width*0.15, kTimeBroadcastViewHeight)];
+  } else if (self.datePickerMode == DatePickerTimeMode) {
+      secondScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.67, kTopViewHeight, kScreen_Width*0.33, kTimeBroadcastViewHeight)];
+  }
+  [self updateCurrentSecond];
+  secondScrollView.delegate = self;
+  secondScrollView.datasource = self;
+  [self setAfterScrollShowView:secondScrollView andCurrentPage:1];
+  [timeBroadcastView addSubview:secondScrollView];
 }
+
+- (void)updateCurrentSecond {
+  self.curSecond = [self setNowTimeShow:5];
+  [secondScrollView setCurrentSelectPage:(self.curSecond-2)];
+}
+
 - (void)setAfterScrollShowView:(MXSCycleScrollView*)scrollview  andCurrentPage:(NSInteger)pageNumber
 {
     UILabel *oneLabel = [[(UILabel*)[[scrollview subviews] objectAtIndex:0] subviews] objectAtIndex:pageNumber];
