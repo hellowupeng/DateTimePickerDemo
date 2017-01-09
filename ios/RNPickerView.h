@@ -8,22 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "RCTComponent.h"
-@class RNPickerView;
-
-@protocol RNPickerViewDelegate <NSObject>
-
-@required
-- (void)pickerViewDidConfirm:(RNPickerView *)pickerView;
-- (void)pickerViewDidCancel:(RNPickerView *)pickerView;
-
-@end
+@class RNPickerView, HcdDateTimePickerView;
 
 @interface RNPickerView : UIView
 
-@property (nonatomic, weak) id<RNPickerViewDelegate> delegate;
+@property (nonatomic, strong) HcdDateTimePickerView *picker;
 @property (nonatomic, copy) RCTBubblingEventBlock onPickerConfirm;
 @property (nonatomic, copy) RCTBubblingEventBlock onPickerCancel;
 @property (nonatomic, assign) NSInteger minYear;
 @property (nonatomic, assign) NSInteger maxYear;
+@property (nonatomic, assign) NSInteger datePickerMode;
 
 @end

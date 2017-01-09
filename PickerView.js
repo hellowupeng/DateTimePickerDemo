@@ -14,6 +14,14 @@ export default class Picker extends Component {
      * 显示 date picker
      */
     show: React.PropTypes.func,
+    /**
+     * 最小年份
+     */
+    minYear: React.PropTypes.number,
+    /**
+     * 最大年份
+     */
+    maxYear: React.PropTypes.number,
   };
   constructor(props) {
     super(props);
@@ -22,11 +30,18 @@ export default class Picker extends Component {
     };
   }
 
+  componentDidMount() {
+  }
+
   componentWillUnmount() {
   }
 
   show() {
     this.setState({ showPicker: true });
+  }
+
+  hide() {
+    this.onPickerCancel();
   }
 
   onPickerConfirm(event) {
@@ -48,7 +63,8 @@ export default class Picker extends Component {
         onPickerConfirm={(event) => this.onPickerConfirm(event)}
         onPickerCancel={(event) => this.onPickerCancel(event)}
         minYear={2016}
-        maxYear={2018}
+        maxYear={2019}
+        datePickerMode={1}
       />
     );
   }

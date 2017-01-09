@@ -27,7 +27,7 @@
 #import "MXSCycleScrollView.h"
 
 typedef enum {
-    DatePickerDateMode,
+    DatePickerDateMode = 1,
     DatePickerTimeMode,
     DatePickerDateTimeMode,
     DatePickerYearMonthMode,

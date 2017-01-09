@@ -12,7 +12,7 @@
 @class HcdDateTimePickerView;
 #import "RNPickerView.h"
 
-@interface RNPickerViewManager : RCTViewManager<RCTBridgeModule, RNPickerViewDelegate>
+@interface RNPickerViewManager : RCTViewManager<RCTBridgeModule>
 
 @property (nonatomic) HcdDateTimePickerView *pickerView;
 @property (nonatomic) UIView *view;

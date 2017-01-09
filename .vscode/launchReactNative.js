@@ -3,7 +3,7 @@
 try {
     var path = require("path");
     var Launcher = require("/Users/andywu/.vscode/extensions/vsmobile.vscode-react-native-0.2.5/out/debugger/launcher.js").Launcher;
-    new Launcher("/Users/andywu/Desktop/Tmp/DatePickerDemo", "/Users/andywu/Desktop/Tmp/DatePickerDemo").launch();
+    new Launcher("/Users/andywu/Desktop/DatePickerDemo", "/Users/andywu/Desktop/DatePickerDemo").launch();
 } catch (e) {
     throw new Error("Unable to launch application. Try deleting .vscode/launchReactNative.js and restarting vscode.");
 }
