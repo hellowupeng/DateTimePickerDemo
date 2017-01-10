@@ -61,7 +61,7 @@ export default class DatePickerDemo extends Component {
           minYear={2016}
           maxYear={2019}
           datePickerMode={7}
-          title={'填写日期'}
+          title={'Title'}
           defaultTime={'2017-10-10 06:25:22'}
           onPickerConfirm={(data) => this.onPickerConfirm(data)}
           onPickerCancel={(data) => this.onPickerCancel(data)}

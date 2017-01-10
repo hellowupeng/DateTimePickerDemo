@@ -170,7 +170,7 @@
   [okBtn setTitleColor:_buttonTitleColor forState:UIControlStateNormal];
   okBtn.titleLabel.font = [UIFont systemFontOfSize:14];
   [okBtn setBackgroundColor:[UIColor clearColor]];
-  [okBtn setTitle:@"确定" forState:UIControlStateNormal];
+  [okBtn setTitle:NSLocalizedString(@"确定", nil) forState:UIControlStateNormal];
   [okBtn addTarget:self action:@selector(selectedButtons:) forControlEvents:UIControlEventTouchUpInside];
   okBtn.tag = kOKBtnTag;
   [self addSubview:okBtn];
@@ -179,7 +179,7 @@
   cancleBtn.titleLabel.font = [UIFont systemFontOfSize:14];
   [cancleBtn setTitleColor:_buttonTitleColor forState:UIControlStateNormal];
   [cancleBtn setBackgroundColor:[UIColor clearColor]];
-  [cancleBtn setTitle:@"取消" forState:UIControlStateNormal];
+  [cancleBtn setTitle:NSLocalizedString(@"取消", nil) forState:UIControlStateNormal];
   [cancleBtn addTarget:self action:@selector(selectedButtons:) forControlEvents:UIControlEventTouchUpInside];
   cancleBtn.tag = kCancleBtnTag;
   [self addSubview:cancleBtn];
@@ -485,48 +485,49 @@
 
 - (UIView *)pageAtIndex:(NSInteger)index andScrollView:(MXSCycleScrollView *)scrollView
 {
-    UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, scrollView.bounds.size.width, scrollView.bounds.size.height/5)];
-    l.tag = index+1;
-    if (scrollView == yearScrollView) {
-        l.text = [NSString stringWithFormat:@"%ld年",(long)(_minYear+index)];
-    }
-    else if (scrollView == monthScrollView)
-    {
-        l.text = [NSString stringWithFormat:@"%ld月",(long)(1+index)];
-    }
-    else if (scrollView == dayScrollView)
-    {
-        l.text = [NSString stringWithFormat:@"%ld日",(long)(1+index)];
-    }
-    else if (scrollView == hourScrollView)
-    {
-        if (index < 10) {
-            l.text = [NSString stringWithFormat:@"0%ld时",(long)index];
-        }
-        else
-            l.text = [NSString stringWithFormat:@"%ld时",(long)index];
-    }
-    else if (scrollView == minuteScrollView)
-    {
-        if (index < 10) {
-            l.text = [NSString stringWithFormat:@"0%ld分",(long)index];
-        }
-        else
-            l.text = [NSString stringWithFormat:@"%ld分",(long)index];
-    }
-    else
-        if (index < 10) {
-            l.text = [NSString stringWithFormat:@"0%ld秒",(long)index];
-        }
-        else
-            l.text = [NSString stringWithFormat:@"%ld秒",(long)index];
-    
-    l.font = [UIFont systemFontOfSize:12];
-    l.textAlignment = NSTextAlignmentCenter;
-    l.backgroundColor = [UIColor clearColor];
-    return l;
+  UILabel *l = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, scrollView.bounds.size.width, scrollView.bounds.size.height/5)];
+  l.tag = index+1;
+
+  if (scrollView == yearScrollView) {
+      l.text = [NSString stringWithFormat:NSLocalizedString(@"%ld年", nil),(long)(_minYear+index)];
+  }
+  else if (scrollView == monthScrollView)
+  {
+      l.text = [NSString stringWithFormat:NSLocalizedString(@"%ld月", nil),(long)(1+index)];
+  }
+  else if (scrollView == dayScrollView)
+  {
+      l.text = [NSString stringWithFormat:NSLocalizedString(@"%ld日", nil),(long)(1+index)];
+  }
+  else if (scrollView == hourScrollView)
+  {
+      if (index < 10) {
+          l.text = [NSString stringWithFormat:NSLocalizedString(@"0%ld时", nil),(long)index];
+      }
+      else
+          l.text = [NSString stringWithFormat:NSLocalizedString(@"%ld时", nil),(long)index];
+  }
+  else if (scrollView == minuteScrollView)
+  {
+      if (index < 10) {
+          l.text = [NSString stringWithFormat:NSLocalizedString(@"0%ld分", nil),(long)index];
+      }
+      else
+          l.text = [NSString stringWithFormat:NSLocalizedString(@"%ld分", nil),(long)index];
+  }
+  else
+      if (index < 10) {
+          l.text = [NSString stringWithFormat:NSLocalizedString(@"0%ld秒", nil),(long)index];
+      }
+      else
+          l.text = [NSString stringWithFormat:NSLocalizedString(@"%ld秒", nil),(long)index];
+  
+  l.font = [UIFont systemFontOfSize:12];
+  l.textAlignment = NSTextAlignmentCenter;
+  l.backgroundColor = [UIColor clearColor];
+  return l;
 }
-//设置现在时间
+////设置现在时间
 - (NSInteger)setNowTimeShow:(NSInteger)timeType
 {
     NSDate *now = self.defaultDate;
@@ -660,25 +661,25 @@
     NSString *weekDay = @"";
     switch (w) {
         case 0:
-            weekDay = @"周日";
+            weekDay = NSLocalizedString(@"周日", nil);
             break;
         case 1:
-            weekDay = @"周一";
+            weekDay = NSLocalizedString(@"周一", nil);
             break;
         case 2:
-            weekDay = @"周二";
+            weekDay = NSLocalizedString(@"周二", nil);
             break;
         case 3:
-            weekDay = @"周三";
+            weekDay = NSLocalizedString(@"周三", nil);
             break;
         case 4:
-            weekDay = @"周四";
+            weekDay = NSLocalizedString(@"周四", nil);
             break;
         case 5:
-            weekDay = @"周五";
+            weekDay = NSLocalizedString(@"周五", nil);
             break;
         case 6:
-            weekDay = @"周六";
+            weekDay = NSLocalizedString(@"周六", nil);
             break;
         default:
             break;
@@ -781,7 +782,7 @@
         }
     }];
     
-    
+  
 }
 
 -(BOOL)isLeapYear:(NSInteger)year {

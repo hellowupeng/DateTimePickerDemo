@@ -52,7 +52,6 @@ export default class Picker extends Component {
     const { showPicker } = this.state;
     if (!showPicker) return null;
     const { minYear, maxYear, datePickerMode, title, onPickerConfirm, onPickerCancel, defaultTime } = this.props;
-    console.log('js defaultTime ----', defaultTime);
     return (
       <RNPickerView
         style={styles.picker}
