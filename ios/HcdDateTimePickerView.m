@@ -1,31 +1,13 @@
-//
-//  ____    ___   _        ___  _____  ____  ____  ____
-// |    \  /   \ | T      /  _]/ ___/ /    T|    \|    \
-// |  o  )Y     Y| |     /  [_(   \_ Y  o  ||  o  )  o  )
-// |   _/ |  O  || l___ Y    _]\__  T|     ||   _/|   _/
-// |  |   |     ||     T|   [_ /  \ ||  _  ||  |  |  |
-// |  |   l     !|     ||     T\    ||  |  ||  |  |  |
-// l__j    \___/ l_____jl_____j \___jl__j__jl__j  l__j
-//
-//
-//	Powered by Polesapp.com
-//
-//
-//  RBCustomDatePickerView.m
-//
-//
-//  Created by fangmi-huangchengda on 15/10/21.
-//
-//
 
 #define kTopViewHeight kScaleFrom_iPhone5_Desgin(44)
 #define kTimeBroadcastViewHeight kScaleFrom_iPhone5_Desgin(200)
 #define kDatePickerHeight (kTopViewHeight + kTimeBroadcastViewHeight)
 #define kOKBtnTag 101
 #define kCancleBtnTag 100
-
 #import "HcdDateTimePickerView.h"
 #import "UIColor+HcdCustom.h"
+
+static const CGFloat unitViewHeight = 40;
 
 @interface HcdDateTimePickerView()<UIGestureRecognizerDelegate>
 {
@@ -73,13 +55,13 @@
 {
   self = [super init];
   if (self) {
-      self.defaultDate = dateTime;
-      if (!self.defaultDate) {
-          self.defaultDate = [NSDate date];
-      }
-      self.datePickerMode = datePickerMode;
-      [self initDatas];
-      [self setTimeBroadcastView];
+    self.defaultDate = dateTime;
+    if (!self.defaultDate) {
+        self.defaultDate = [NSDate date];
+    }
+    self.datePickerMode = datePickerMode;
+    [self initDatas];
+    [self setTimeBroadcastView];
   }
   return self;
 }
@@ -100,46 +82,37 @@
   [self setAfterScrollShowView:yearScrollView andCurrentPage:1];
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
-
 - (void)initDatas {
-    _topViewColor = [UIColor colorWithHexString:@"0x6271f3"];
-    _buttonTitleColor = [UIColor colorWithHexString:@"0xffffff"];
+  _topViewColor = [UIColor colorWithHexString:@"0x6271f3"];
+  _buttonTitleColor = [UIColor colorWithHexString:@"0xffffff"];
 }
 
 - (void)setTopViewColor:(UIColor *)topViewColor {
-    _topViewColor = topViewColor;
-    if (topView) {
-        topView.backgroundColor = topViewColor;
-    }
+  _topViewColor = topViewColor;
+  if (topView) {
+    topView.backgroundColor = topViewColor;
+  }
 }
 
 - (void)setButtonTitleColor:(UIColor *)buttonTitleColor {
-    _buttonTitleColor = buttonTitleColor;
-    if (okBtn) {
-        [okBtn setTitleColor:_buttonTitleColor forState:UIControlStateNormal];
-    }
-    if (cancleBtn) {
-        [cancleBtn setTitleColor:_buttonTitleColor forState:UIControlStateNormal];
-    }
+  _buttonTitleColor = buttonTitleColor;
+  if (okBtn) {
+    [okBtn setTitleColor:_buttonTitleColor forState:UIControlStateNormal];
+  }
+  if (cancleBtn) {
+    [cancleBtn setTitleColor:_buttonTitleColor forState:UIControlStateNormal];
+  }
 }
 
 - (void)setTitleColor:(UIColor *)titleColor
 {
-    _titleColor = titleColor;
-    titleLbl.textColor = _titleColor;
+  _titleColor = titleColor;
+  titleLbl.textColor = _titleColor;
 }
 
 - (void)setTitle:(NSString *)title {
-    _title = title;
-    titleLbl.text = title;
+  _title = title;
+  titleLbl.text = title;
 }
 // custom
 - (void)setDatePickerMode:(DatePickerMode)datePickerMode {
@@ -165,7 +138,7 @@
   
   topView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreen_Width, kTopViewHeight)];
   topView.backgroundColor = _topViewColor;
-  
+
   okBtn = [[UIButton alloc]initWithFrame:CGRectMake(kScreen_Width-60, 0, 60, kTopViewHeight)];
   [okBtn setTitleColor:_buttonTitleColor forState:UIControlStateNormal];
   okBtn.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -192,7 +165,7 @@
   [topView addSubview:cancleBtn];
   [topView addSubview:titleLbl];
   
-  timeBroadcastView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, kTimeBroadcastViewHeight)];
+  timeBroadcastView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, kTimeBroadcastViewHeight + unitViewHeight)];
   timeBroadcastView.backgroundColor = [UIColor redColor];
   timeBroadcastView.layer.cornerRadius = 0;//设置视图圆角
   timeBroadcastView.layer.masksToBounds = YES;
@@ -201,20 +174,20 @@
   timeBroadcastView.layer.borderWidth = 0.0;
   timeBroadcastView.backgroundColor = [UIColor whiteColor];
   [self addSubview:timeBroadcastView];
-  UIView *beforeSepLine = [[UIView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + (kTimeBroadcastViewHeight / 5), kScreen_Width, 1.5)];
+  UIView *beforeSepLine = [[UIView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + (kTimeBroadcastViewHeight / 5) + unitViewHeight, kScreen_Width, 1.5)];
   [beforeSepLine setBackgroundColor:[UIColor colorWithHexString:@"0xEDEDED"]];
   [timeBroadcastView addSubview:beforeSepLine];
-  UIView *middleSepView = [[UIView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + 2 * (kTimeBroadcastViewHeight / 5), kScreen_Width, kTimeBroadcastViewHeight / 5)];
+  UIView *middleSepView = [[UIView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + 2 * (kTimeBroadcastViewHeight / 5) + unitViewHeight, kScreen_Width, kTimeBroadcastViewHeight / 5)];
   [middleSepView setBackgroundColor:[UIColor colorWithHexString:@"0xEDEDED"]];
   [timeBroadcastView addSubview:middleSepView];
   middleSepView.layer.borderWidth = 1.5;
   middleSepView.layer.borderColor = [UIColor colorWithHexString:@"0xEDEDED"].CGColor;
-  UIView *bottomSepLine = [[UIView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + 4 * (kTimeBroadcastViewHeight / 5), kScreen_Width, 1.5)];
+  UIView *bottomSepLine = [[UIView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + 4 * (kTimeBroadcastViewHeight / 5) + unitViewHeight, kScreen_Width, 1.5)];
   [bottomSepLine setBackgroundColor:[UIColor colorWithHexString:@"0xEDEDED"]];
   [timeBroadcastView addSubview:bottomSepLine];
   [self updateDateMode];
   [timeBroadcastView addSubview:topView];
-  [timeBroadcastView setFrame:CGRectMake(0, kScreen_Height-100, kScreen_Width, kDatePickerHeight)];
+  [timeBroadcastView setFrame:CGRectMake(0, kScreen_Height-100, kScreen_Width, kDatePickerHeight + unitViewHeight)];
 }
 
 - (void)updateDateMode {
@@ -282,13 +255,13 @@
 - (void)setYearScrollView
 {
   if (self.datePickerMode == DatePickerDateTimeMode) {
-      yearScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight, kScreen_Width*0.25, kTimeBroadcastViewHeight)];
+      yearScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + unitViewHeight, kScreen_Width*0.25, kTimeBroadcastViewHeight)];
   } else if (self.datePickerMode == DatePickerDateMode) {
-      yearScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight, kScreen_Width*0.34, kTimeBroadcastViewHeight)];
+      yearScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + unitViewHeight, kScreen_Width*0.34, kTimeBroadcastViewHeight)];
   } else if (self.datePickerMode == DatePickerYearMonthMode) {
-      yearScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
+      yearScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + unitViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
   } else if (self.datePickerMode == DatePickerDateHourMinuteMode) {
-      yearScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight, kScreen_Width*0.28, kTimeBroadcastViewHeight)];
+      yearScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + unitViewHeight, kScreen_Width*0.28, kTimeBroadcastViewHeight)];
   }
   [self updateCurrentYear];
   yearScrollView.delegate = self;
@@ -305,15 +278,15 @@
 - (void)setMonthScrollView
 {
   if (self.datePickerMode == DatePickerDateTimeMode) {
-      monthScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.25, kTopViewHeight, kScreen_Width*0.15, kTimeBroadcastViewHeight)];
+      monthScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.25, kTopViewHeight + unitViewHeight, kScreen_Width*0.15, kTimeBroadcastViewHeight)];
   } else if (self.datePickerMode == DatePickerDateMode) {
-      monthScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.34, kTopViewHeight, kScreen_Width*0.33, kTimeBroadcastViewHeight)];
+      monthScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.34, kTopViewHeight + unitViewHeight, kScreen_Width*0.33, kTimeBroadcastViewHeight)];
   } else if (self.datePickerMode == DatePickerMonthDayMode) {
-      monthScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0, kTopViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
+      monthScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0, kTopViewHeight + unitViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
   } else if (self.datePickerMode == DatePickerYearMonthMode) {
-      monthScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.5, kTopViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
+      monthScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.5, kTopViewHeight + unitViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
   } else if (self.datePickerMode == DatePickerDateHourMinuteMode) {
-      monthScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.28, kTopViewHeight, kScreen_Width*0.18, kTimeBroadcastViewHeight)];
+      monthScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.28, kTopViewHeight + unitViewHeight, kScreen_Width*0.18, kTimeBroadcastViewHeight)];
   }
   [self updateCurrentMonth];
   monthScrollView.delegate = self;
@@ -330,13 +303,13 @@
 - (void)setDayScrollView
 {
   if (self.datePickerMode == DatePickerDateTimeMode) {
-      dayScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.40, kTopViewHeight, kScreen_Width*0.15, kTimeBroadcastViewHeight)];
+      dayScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.40, kTopViewHeight + unitViewHeight, kScreen_Width*0.15, kTimeBroadcastViewHeight)];
   } else if (self.datePickerMode == DatePickerDateMode) {
-      dayScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.67, kTopViewHeight, kScreen_Width*0.33, kTimeBroadcastViewHeight)];
+      dayScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.67, kTopViewHeight + unitViewHeight, kScreen_Width*0.33, kTimeBroadcastViewHeight)];
   } else if (self.datePickerMode == DatePickerMonthDayMode) {
-      dayScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.5, kTopViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
+      dayScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.5, kTopViewHeight + unitViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
   } else if (self.datePickerMode == DatePickerDateHourMinuteMode) {
-      dayScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.46, kTopViewHeight, kScreen_Width*0.18, kTimeBroadcastViewHeight)];
+      dayScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.46, kTopViewHeight + unitViewHeight, kScreen_Width*0.18, kTimeBroadcastViewHeight)];
   }
   [self updateCurrentDay];
   dayScrollView.delegate = self;
@@ -353,13 +326,13 @@
 - (void)setHourScrollView
 {
   if (self.datePickerMode == DatePickerDateTimeMode) {
-      hourScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.55, kTopViewHeight, kScreen_Width*0.15, kTimeBroadcastViewHeight)];
+      hourScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.55, kTopViewHeight + unitViewHeight, kScreen_Width*0.15, kTimeBroadcastViewHeight)];
   } else if (self.datePickerMode == DatePickerTimeMode) {
-      hourScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight, kScreen_Width*0.34, kTimeBroadcastViewHeight)];
+      hourScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + unitViewHeight, kScreen_Width*0.34, kTimeBroadcastViewHeight)];
   } else if (self.datePickerMode == DatePickerHourMinuteMode) {
-      hourScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
+      hourScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(0, kTopViewHeight + unitViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
   } else if (self.datePickerMode == DatePickerDateHourMinuteMode) {
-      hourScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.64, kTopViewHeight, kScreen_Width*0.18, kTimeBroadcastViewHeight)];
+      hourScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.64, kTopViewHeight + unitViewHeight, kScreen_Width*0.18, kTimeBroadcastViewHeight)];
   }
   [self updateCurrentHour];
   hourScrollView.delegate = self;
@@ -376,13 +349,13 @@
 - (void)setMinuteScrollView
 {
   if (self.datePickerMode == DatePickerDateTimeMode) {
-      minuteScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.70, kTopViewHeight, kScreen_Width*0.15, kTimeBroadcastViewHeight)];
+      minuteScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.70, kTopViewHeight + unitViewHeight, kScreen_Width*0.15, kTimeBroadcastViewHeight)];
   } else if (self.datePickerMode == DatePickerTimeMode) {
-      minuteScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.34, kTopViewHeight, kScreen_Width*0.33, kTimeBroadcastViewHeight)];
+      minuteScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.34, kTopViewHeight + unitViewHeight, kScreen_Width*0.33, kTimeBroadcastViewHeight)];
   } else if (self.datePickerMode == DatePickerHourMinuteMode) {
-      minuteScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.5, kTopViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
+      minuteScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.5, kTopViewHeight + unitViewHeight, kScreen_Width*0.5, kTimeBroadcastViewHeight)];
   } else if (self.datePickerMode == DatePickerDateHourMinuteMode) {
-      minuteScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.82, kTopViewHeight, kScreen_Width*0.18, kTimeBroadcastViewHeight)];
+      minuteScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.82, kTopViewHeight + unitViewHeight, kScreen_Width*0.18, kTimeBroadcastViewHeight)];
   }
   [self updateCurrentMin];
   minuteScrollView.delegate = self;
@@ -399,9 +372,9 @@
 - (void)setSecondScrollView
 {
   if (self.datePickerMode == DatePickerDateTimeMode) {
-      secondScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.85, kTopViewHeight, kScreen_Width*0.15, kTimeBroadcastViewHeight)];
+      secondScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.85, kTopViewHeight + unitViewHeight, kScreen_Width*0.15, kTimeBroadcastViewHeight)];
   } else if (self.datePickerMode == DatePickerTimeMode) {
-      secondScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.67, kTopViewHeight, kScreen_Width*0.33, kTimeBroadcastViewHeight)];
+      secondScrollView = [[MXSCycleScrollView alloc] initWithFrame:CGRectMake(kScreen_Width*0.67, kTopViewHeight + unitViewHeight, kScreen_Width*0.33, kTimeBroadcastViewHeight)];
   }
   [self updateCurrentSecond];
   secondScrollView.delegate = self;
@@ -693,14 +666,14 @@
     [UIView animateWithDuration:0.3f delay:0 usingSpringWithDamping:0.8f initialSpringVelocity:0 options:UIViewAnimationOptionLayoutSubviews animations:^{
         
         [weak setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.5f]];
-        [timeBroadcastView setFrame:CGRectMake(0, kScreen_Height - kDatePickerHeight, kScreen_Width, kDatePickerHeight)];
+        [timeBroadcastView setFrame:CGRectMake(0, kScreen_Height - kDatePickerHeight - unitViewHeight, kScreen_Width, kDatePickerHeight + unitViewHeight)];
         
     } completion:^(BOOL finished) {
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:weak action:@selector(dismiss:)];
         tap.delegate = self;
         [weak addGestureRecognizer:tap];
         
-        [timeBroadcastView setFrame:CGRectMake(0, kScreen_Height - kDatePickerHeight, kScreen_Width, kDatePickerHeight)];
+        [timeBroadcastView setFrame:CGRectMake(0, kScreen_Height - kDatePickerHeight - unitViewHeight, kScreen_Width, kDatePickerHeight + unitViewHeight)];
     }];
 }
 
@@ -713,7 +686,7 @@
     [UIView animateWithDuration:0.4f delay:0 usingSpringWithDamping:0.8f initialSpringVelocity:0 options:UIViewAnimationOptionLayoutSubviews animations:^{
         
         [weak setBackgroundColor:[UIColor colorWithRed:0 green:0 blue:0 alpha:0.0f]];
-        [timeBroadcastView setFrame:CGRectMake(0, kScreen_Height, kScreen_Width, height)];
+        [timeBroadcastView setFrame:CGRectMake(0, kScreen_Height, kScreen_Width, height + unitViewHeight)];
         
     } completion:^(BOOL finished) {
       HcdDateTimePickerView *innerSelf = weak;

@@ -11,3 +11,10 @@
 @interface HcdUnitView : UIView
 
 @end
+
+/**
+ Picker topView button
+ */
+@interface HcdButton : UIButton
+
+@end
