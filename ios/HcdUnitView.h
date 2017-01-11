@@ -7,13 +7,29 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HcdDateTimePickerView.h"
 
 @interface HcdUnitView : UIView
+
+- (instancetype)initWithDatePickerMode:(DatePickerMode)datePickerMode;
+- (void)updateFrameWithDatePickerMode:(DatePickerMode)datePickerMode;
 
 @end
 
 /**
- Picker topView button
+ 显示年、月、日、时、分、秒
+ */
+@interface HcdTextView : UIView
+
+@property (nonatomic, strong) UILabel *titleLabel;
+
+- (instancetype)initWithTitle:(NSString *)title;
+- (void)updateTitleRect;
+
+@end
+
+/**
+ Picker topView 按钮
  */
 @interface HcdButton : UIButton
 

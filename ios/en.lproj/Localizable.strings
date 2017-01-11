@@ -8,18 +8,14 @@
 
 "确定" = "Confirm";
 "取消" = "Cancel";
-"%ld年" = "%ld";
-"%ld月" = "%ld";
-"%ld日" = "%ld";
-// 时
-"0%ld时" = "0%ldh";
-"%ld时" = "%ldh";
-// 分
-"0%ld分" = "0%ldm";
-"%ld分" = "%ldm";
-// 秒
-"0%ld秒" = "0%lds";
-"%ld秒" = "%lds";
+
+"年" = "year";
+"月" = "month";
+"日" = "day";
+"时" = "hour";
+"分" = "minute";
+"秒" = "second";
+
 "周日" = "Sun";
 "周一" = "Mon";
 "周二" = "Tue";

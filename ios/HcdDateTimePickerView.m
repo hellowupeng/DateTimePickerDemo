@@ -4,10 +4,12 @@
 #define kDatePickerHeight (kTopViewHeight + kTimeBroadcastViewHeight)
 #define kOKBtnTag 101
 #define kCancleBtnTag 100
+
 #import "HcdDateTimePickerView.h"
 #import "UIColor+HcdCustom.h"
+#import "HcdUnitView.h"
 
-static const CGFloat unitViewHeight = 40;
+CGFloat const unitViewHeight = 25;
 
 @interface HcdDateTimePickerView()<UIGestureRecognizerDelegate>
 {
@@ -31,6 +33,7 @@ static const CGFloat unitViewHeight = 40;
 @property (nonatomic,assign) NSInteger curHour;//当前小时
 @property (nonatomic,assign) NSInteger curMin;//当前分
 @property (nonatomic,assign) NSInteger curSecond;//当前秒
+@property (nonatomic, strong) HcdUnitView *unitView;
 
 @end
 
@@ -188,10 +191,13 @@ static const CGFloat unitViewHeight = 40;
   [self updateDateMode];
   [timeBroadcastView addSubview:topView];
   [timeBroadcastView setFrame:CGRectMake(0, kScreen_Height-100, kScreen_Width, kDatePickerHeight + unitViewHeight)];
+  _unitView = [[HcdUnitView alloc] initWithDatePickerMode:_datePickerMode];
+  [timeBroadcastView addSubview:_unitView];
 }
 
 - (void)updateDateMode {
   [self removeOldView];
+  [_unitView updateFrameWithDatePickerMode:_datePickerMode];
   if (self.datePickerMode == DatePickerDateMode) {
     [self setYearScrollView];
     [self setMonthScrollView];
@@ -462,38 +468,38 @@ static const CGFloat unitViewHeight = 40;
   l.tag = index+1;
 
   if (scrollView == yearScrollView) {
-      l.text = [NSString stringWithFormat:NSLocalizedString(@"%ld年", nil),(long)(_minYear+index)];
+      l.text = [NSString stringWithFormat:@"%ld",(long)(_minYear+index)];
   }
   else if (scrollView == monthScrollView)
   {
-      l.text = [NSString stringWithFormat:NSLocalizedString(@"%ld月", nil),(long)(1+index)];
+      l.text = [NSString stringWithFormat:@"%ld",(long)(1+index)];
   }
   else if (scrollView == dayScrollView)
   {
-      l.text = [NSString stringWithFormat:NSLocalizedString(@"%ld日", nil),(long)(1+index)];
+      l.text = [NSString stringWithFormat:@"%ld",(long)(1+index)];
   }
   else if (scrollView == hourScrollView)
   {
       if (index < 10) {
-          l.text = [NSString stringWithFormat:NSLocalizedString(@"0%ld时", nil),(long)index];
+          l.text = [NSString stringWithFormat:@"0%ld",(long)index];
       }
       else
-          l.text = [NSString stringWithFormat:NSLocalizedString(@"%ld时", nil),(long)index];
+          l.text = [NSString stringWithFormat:@"%ld",(long)index];
   }
   else if (scrollView == minuteScrollView)
   {
       if (index < 10) {
-          l.text = [NSString stringWithFormat:NSLocalizedString(@"0%ld分", nil),(long)index];
+          l.text = [NSString stringWithFormat:@"0%ld",(long)index];
       }
       else
-          l.text = [NSString stringWithFormat:NSLocalizedString(@"%ld分", nil),(long)index];
+          l.text = [NSString stringWithFormat:@"%ld",(long)index];
   }
   else
       if (index < 10) {
-          l.text = [NSString stringWithFormat:NSLocalizedString(@"0%ld秒", nil),(long)index];
+          l.text = [NSString stringWithFormat:@"0%ld",(long)index];
       }
       else
-          l.text = [NSString stringWithFormat:NSLocalizedString(@"%ld秒", nil),(long)index];
+          l.text = [NSString stringWithFormat:@"%ld",(long)index];
   
   l.font = [UIFont systemFontOfSize:12];
   l.textAlignment = NSTextAlignmentCenter;

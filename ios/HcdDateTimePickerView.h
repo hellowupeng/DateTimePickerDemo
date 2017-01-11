@@ -26,6 +26,8 @@
 #import <UIKit/UIKit.h>
 #import "MXSCycleScrollView.h"
 
+extern CGFloat const unitViewHeight;
+
 typedef enum {
     DatePickerDateMode = 1,
     DatePickerTimeMode,
@@ -46,14 +48,11 @@ typedef void (^ClickedCancelButton)(void);
 @property (nonatomic, strong) ClickedCancelButton clickedCancelButton;
 
 @property (nonatomic,assign) DatePickerMode datePickerMode;
-
 @property (nonatomic,assign) NSInteger maxYear;
 @property (nonatomic,assign) NSInteger minYear;
-
 @property (nonatomic,strong) UIColor *topViewColor;
 @property (nonatomic,strong) UIColor *buttonTitleColor;
 @property (nonatomic,strong) UIColor *titleColor;
-
 @property (nonatomic,weak  ) NSString *title;
 @property (nonatomic, retain) NSDate *defaultDate;
 
