@@ -197,35 +197,37 @@
     if (page>1 || page <=0) {
         [self setAfterScrollShowView:aScrollView andCurrentPage:1];
     }
-    if ([_delegate respondsToSelector:@selector(scrollviewDidChangeNumber)]) {
-        [_delegate scrollviewDidChangeNumber];
-    }
+//    if ([_delegate respondsToSelector:@selector(scrollviewDidChangeNumber)]) {
+//        [_delegate scrollviewDidChangeNumber];
+//      NSLog(@"scrollViewDidScroll");
+//    }
 }
+
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
-    [self setAfterScrollShowView:scrollView andCurrentPage:1];
+  [self setAfterScrollShowView:scrollView andCurrentPage:1];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    [_scrollView setContentOffset:CGPointMake(0, (self.bounds.size.height/5)) animated:YES];
-    [self setAfterScrollShowView:scrollView andCurrentPage:1];
-    if ([_delegate respondsToSelector:@selector(scrollviewDidChangeNumber)]) {
-        [_delegate scrollviewDidChangeNumber];
-    }
+  [_scrollView setContentOffset:CGPointMake(0, (self.bounds.size.height/5)) animated:YES];
+  [self setAfterScrollShowView:scrollView andCurrentPage:1];
+  if ([_delegate respondsToSelector:@selector(scrollviewDidChangeNumber)]) {
+    [_delegate scrollviewDidChangeNumber];
+  }
 }
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView
 {
-    [self setAfterScrollShowView:scrollView andCurrentPage:1];
+  [self setAfterScrollShowView:scrollView andCurrentPage:1];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    [_scrollView setContentOffset:CGPointMake(0, (self.bounds.size.height/5)) animated:YES];
-    [self setAfterScrollShowView:scrollView andCurrentPage:1];
-    if ([_delegate respondsToSelector:@selector(scrollviewDidChangeNumber)]) {
-        [_delegate scrollviewDidChangeNumber];
-    }
+  [_scrollView setContentOffset:CGPointMake(0, (self.bounds.size.height/5)) animated:YES];
+  [self setAfterScrollShowView:scrollView andCurrentPage:1];
+//  if ([_delegate respondsToSelector:@selector(scrollviewDidChangeNumber)]) {
+//      [_delegate scrollviewDidChangeNumber];
+//  }
 }
 
 @end

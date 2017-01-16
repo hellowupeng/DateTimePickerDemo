@@ -42,10 +42,12 @@ typedef void(^DatePickerCompleteAnimationBlock)(BOOL Complete);
 typedef void(^ClickedOkBtn)(NSString *dateTimeStr);
 // custom
 typedef void (^ClickedCancelButton)(void);
+typedef void (^SelectedDateBlock)(NSString *selectedDateString);
 
 @interface HcdDateTimePickerView : UIView <MXSCycleScrollViewDatasource,MXSCycleScrollViewDelegate>
 @property (nonatomic,strong) ClickedOkBtn clickedOkBtn;
 @property (nonatomic, strong) ClickedCancelButton clickedCancelButton;
+@property (nonatomic, strong) SelectedDateBlock selectedDateBlock;
 
 @property (nonatomic,assign) DatePickerMode datePickerMode;
 @property (nonatomic,assign) NSInteger maxYear;

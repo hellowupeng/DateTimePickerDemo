@@ -27,10 +27,3 @@
 - (void)updateTitleRect;
 
 @end
-
-/**
- Picker topView 按钮
- */
-@interface HcdButton : UIButton
-
-@end

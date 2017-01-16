@@ -25,15 +25,23 @@
   _picker.topViewColor = [UIColor greenColor];
 //  _picker.title = @"";
   _picker.titleColor = [UIColor grayColor];
-  _picker.clickedOkBtn = ^(NSString * datetimeStr){
+  // click OK button callback
+  _picker.clickedOkBtn = ^(NSString * datetimeStr) {
     RNPickerView *innerself = weakSelf;
     NSDictionary *params = @{@"data": datetimeStr};
     innerself.onPickerConfirm(params);
   };
+  // click cancel button callback
   _picker.clickedCancelButton = ^{
     RNPickerView *innerSelf = weakSelf;
     NSDictionary *params = @{@"data": @"0"};
     innerSelf.onPickerCancel(params);
+  };
+  // selected date change callback
+  _picker.selectedDateBlock = ^(NSString *selectedDate) {
+    NSLog(@"selectedDate ---- %@", selectedDate);
+    RNPickerView *innerSelf = weakSelf;
+    innerSelf.picker.title = selectedDate;
   };
   [self addSubview:_picker];
   [_picker showHcdDateTimePicker];

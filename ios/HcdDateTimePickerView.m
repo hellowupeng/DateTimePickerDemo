@@ -583,49 +583,52 @@ CGFloat const unitViewHeight = 25;
 //滚动时上下标签显示(当前时间和是否为有效时间)
 - (void)scrollviewDidChangeNumber
 {
-    UILabel *yearLabel = [[(UILabel*)[[yearScrollView subviews] objectAtIndex:0] subviews] objectAtIndex:3];
-    UILabel *monthLabel = [[(UILabel*)[[monthScrollView subviews] objectAtIndex:0] subviews] objectAtIndex:3];
-    UILabel *dayLabel = [[(UILabel*)[[dayScrollView subviews] objectAtIndex:0] subviews] objectAtIndex:3];
-    UILabel *hourLabel = [[(UILabel*)[[hourScrollView subviews] objectAtIndex:0] subviews] objectAtIndex:3];
-    UILabel *minuteLabel = [[(UILabel*)[[minuteScrollView subviews] objectAtIndex:0] subviews] objectAtIndex:3];
-    UILabel *secondLabel = [[(UILabel*)[[secondScrollView subviews] objectAtIndex:0] subviews] objectAtIndex:3];
-    
-    NSInteger month = monthLabel.tag;
-    NSInteger year = yearLabel.tag + _minYear - 1;
-    if (month != self.curMonth) {
-        self.curMonth = month;
-        [dayScrollView reloadData];
-        [dayScrollView setCurrentSelectPage:(self.curDay-3)];
-        [self setAfterScrollShowView:dayScrollView andCurrentPage:1];
-    }
-    if (year != self.curYear) {
-        self.curYear = year;
-        [dayScrollView reloadData];
-        [dayScrollView setCurrentSelectPage:(self.curDay-3)];
-        [self setAfterScrollShowView:dayScrollView andCurrentPage:1];
-    }
-    
-    self.curMonth = monthLabel.tag;
-    self.curDay = dayLabel.tag;
-    self.curHour = hourLabel.tag - 1;
-    self.curMin = minuteLabel.tag - 1;
-    self.curSecond = secondLabel.tag - 1;
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSString *selectTimeString = [NSString stringWithFormat:@"%ld-%02ld-%02ld %02ld:%02ld:%02ld",(long)self.curYear,(long)self.curMonth,(long)self.curDay,(long)self.curHour,(long)self.curMin,(long)self.curSecond];
-    NSDate *selectDate = [dateFormatter dateFromString:selectTimeString];
-    NSDate *nowDate = self.defaultDate;
-    NSString *nowString = [dateFormatter stringFromDate:nowDate];
-    NSDate *nowStrDate = [dateFormatter dateFromString:nowString];
-    if (NSOrderedAscending == [selectDate compare:nowStrDate]) {//选择的时间与当前系统时间做比较
-        [okBtn setEnabled:YES];
-    }
-    else
-    {
-        [okBtn setEnabled:YES];
-    }
+  UILabel *yearLabel = [[(UILabel*)[[yearScrollView subviews] objectAtIndex:0] subviews] objectAtIndex:3];
+  UILabel *monthLabel = [[(UILabel*)[[monthScrollView subviews] objectAtIndex:0] subviews] objectAtIndex:3];
+  UILabel *dayLabel = [[(UILabel*)[[dayScrollView subviews] objectAtIndex:0] subviews] objectAtIndex:3];
+  UILabel *hourLabel = [[(UILabel*)[[hourScrollView subviews] objectAtIndex:0] subviews] objectAtIndex:3];
+  UILabel *minuteLabel = [[(UILabel*)[[minuteScrollView subviews] objectAtIndex:0] subviews] objectAtIndex:3];
+  UILabel *secondLabel = [[(UILabel*)[[secondScrollView subviews] objectAtIndex:0] subviews] objectAtIndex:3];
+  
+  NSInteger month = monthLabel.tag;
+  NSInteger year = yearLabel.tag + _minYear - 1;
+  if (month != self.curMonth) {
+      self.curMonth = month;
+      [dayScrollView reloadData];
+      [dayScrollView setCurrentSelectPage:(self.curDay-3)];
+      [self setAfterScrollShowView:dayScrollView andCurrentPage:1];
+  }
+  if (year != self.curYear) {
+      self.curYear = year;
+      [dayScrollView reloadData];
+      [dayScrollView setCurrentSelectPage:(self.curDay-3)];
+      [self setAfterScrollShowView:dayScrollView andCurrentPage:1];
+  }
+  
+  self.curMonth = monthLabel.tag;
+  self.curDay = dayLabel.tag;
+  self.curHour = hourLabel.tag - 1;
+  self.curMin = minuteLabel.tag - 1;
+  self.curSecond = secondLabel.tag - 1;
+  
+  NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+  [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+  NSString *selectTimeString = [NSString stringWithFormat:@"%ld-%02ld-%02ld %02ld:%02ld:%02ld",(long)self.curYear,(long)self.curMonth,(long)self.curDay,(long)self.curHour,(long)self.curMin,(long)self.curSecond];
+  [self selectedDateString];
+  self.selectedDateBlock(dateTimeStr); // 返回当前选中的日期
+  NSDate *selectDate = [dateFormatter dateFromString:selectTimeString];
+  NSDate *nowDate = self.defaultDate;
+  NSString *nowString = [dateFormatter stringFromDate:nowDate];
+  NSDate *nowStrDate = [dateFormatter dateFromString:nowString];
+  if (NSOrderedAscending == [selectDate compare:nowStrDate]) { // 选择的时间与当前系统时间做比较
+      [okBtn setEnabled:YES];
+  }
+  else
+  {
+      [okBtn setEnabled:YES];
+  }
 }
+
 //通过日期求星期
 - (NSString*)fromDateToWeek:(NSString*)selectDate
 {
@@ -771,6 +774,35 @@ CGFloat const unitViewHeight = 25;
         return NO;
     }
     return NO;
+}
+
+- (void)selectedDateString {
+  switch (self.datePickerMode) {
+    case DatePickerDateMode:
+      dateTimeStr = [NSString stringWithFormat:@"%ld-%ld-%ld",(long)self.curYear,(long)self.curMonth,(long)self.curDay];
+      break;
+    case DatePickerTimeMode:
+      dateTimeStr = [NSString stringWithFormat:@"%02ld:%02ld:%02ld",(long)self.curHour,(long)self.curMin,(long)self.curSecond];
+      break;
+    case DatePickerDateTimeMode:
+      dateTimeStr = [NSString stringWithFormat:@"%ld-%ld-%ld %02ld:%02ld:%02ld",(long)self.curYear,(long)self.curMonth,(long)self.curDay,(long)self.curHour,(long)self.curMin,(long)self.curSecond];
+      break;
+    case DatePickerMonthDayMode:
+      dateTimeStr = [NSString stringWithFormat:@"%ld-%ld",(long)self.curMonth,(long)self.curDay];
+      break;
+    case DatePickerYearMonthMode:
+      dateTimeStr = [NSString stringWithFormat:@"%ld-%ld",(long)self.curYear,(long)self.curMonth];
+      break;
+    case DatePickerHourMinuteMode:
+      dateTimeStr = [NSString stringWithFormat:@"%02ld:%02ld",(long)self.curHour,(long)self.curMin];
+      break;
+    case DatePickerDateHourMinuteMode:
+      dateTimeStr = [NSString stringWithFormat:@"%ld-%ld-%ld %02ld:%02ld",(long)self.curYear,(long)self.curMonth,(long)self.curDay,(long)self.curHour,(long)self.curMin];
+      break;
+    default:
+      dateTimeStr = [NSString stringWithFormat:@"%ld-%ld-%ld %02ld:%02ld:%02ld",(long)self.curYear,(long)self.curMonth,(long)self.curDay,(long)self.curHour,(long)self.curMin,(long)self.curSecond];
+      break;
+  }
 }
 
 @end
