@@ -1,21 +1,24 @@
 /* 
-  Localizable.strings
+  English.strings
   DatePickerDemo
 
-  Created by AndyWu on 1/10/17.
+  Created by AndyWu on 1/18/17.
   Copyright © 2017 Facebook. All rights reserved.
 */
 
+// Englise
+
+// button title
 "确定" = "Confirm";
 "取消" = "Cancel";
-
+// date
 "年" = "year";
 "月" = "month";
 "日" = "day";
 "时" = "hour";
 "分" = "minute";
 "秒" = "second";
-
+// week
 "周日" = "Sun";
 "周一" = "Mon";
 "周二" = "Tue";

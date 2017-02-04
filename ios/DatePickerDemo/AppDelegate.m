@@ -14,6 +14,7 @@
 
 @implementation AppDelegate
 
+#pragma mark - UIApplicationDelegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   NSURL *jsCodeLocation;

@@ -16,6 +16,8 @@ import {
 import Picker from './PickerView';
 
 export default class DatePickerDemo extends Component {
+
+  /** life cycle */
   constructor(props) {
     super(props);
     this.state = {
@@ -31,19 +33,20 @@ export default class DatePickerDemo extends Component {
   componentWillUnmount() {
   }
 
-  show() {
-    this.picker.show();
-  }
-
+  /** callback */
   onPickerConfirm(data) {
     console.log('data ----- ', data);
     this.setState({ selectedValue: data });
     this.picker.hide();
   }
 
-  onPickerCancel(data) {
-    console.log('data ----- ', data);
+  onPickerCancel() {
     this.picker.hide();
+  }
+
+  /** event response */
+  show() {
+    this.picker.show();
   }
 
   render() {
@@ -61,8 +64,9 @@ export default class DatePickerDemo extends Component {
           minYear={2016}
           maxYear={2019}
           datePickerMode={7}
-          title={'Title'}
-          defaultTime={'2017-10-10 06:25:22'}
+          title={'2018-1-8'}
+          defaultTime={'2018-1-8'}
+          languageType={1}
           onPickerConfirm={(data) => this.onPickerConfirm(data)}
           onPickerCancel={(data) => this.onPickerCancel(data)}
         />
@@ -70,6 +74,7 @@ export default class DatePickerDemo extends Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -91,4 +96,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
   },
 });
+
 AppRegistry.registerComponent('DatePickerDemo', () => DatePickerDemo);

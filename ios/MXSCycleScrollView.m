@@ -28,6 +28,7 @@
 @synthesize datasource = _datasource;
 @synthesize delegate = _delegate;
 
+#pragma mark - init method
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -44,6 +45,8 @@
     }
     return self;
 }
+
+#pragma mark - getters and setters
 //设置初始化页数
 - (void)setCurrentSelectPage:(NSInteger)selectPage
 {
@@ -197,10 +200,9 @@
     if (page>1 || page <=0) {
         [self setAfterScrollShowView:aScrollView andCurrentPage:1];
     }
-//    if ([_delegate respondsToSelector:@selector(scrollviewDidChangeNumber)]) {
-//        [_delegate scrollviewDidChangeNumber];
-//      NSLog(@"scrollViewDidScroll");
-//    }
+    if ([_delegate respondsToSelector:@selector(scrollviewDidChangeNumber)]) {
+      [_delegate scrollviewDidChangeNumber];
+    }
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
@@ -225,9 +227,9 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
   [_scrollView setContentOffset:CGPointMake(0, (self.bounds.size.height/5)) animated:YES];
   [self setAfterScrollShowView:scrollView andCurrentPage:1];
-//  if ([_delegate respondsToSelector:@selector(scrollviewDidChangeNumber)]) {
-//      [_delegate scrollviewDidChangeNumber];
-//  }
+  if ([_delegate respondsToSelector:@selector(scrollviewDidChangeNumber)]) {
+      [_delegate scrollviewDidChangeNumber];
+  }
 }
 
 @end

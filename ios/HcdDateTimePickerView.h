@@ -25,6 +25,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MXSCycleScrollView.h"
+#import "RNPickerView.h"
 
 extern CGFloat const unitViewHeight;
 
@@ -40,7 +41,6 @@ typedef enum {
 
 typedef void(^DatePickerCompleteAnimationBlock)(BOOL Complete);
 typedef void(^ClickedOkBtn)(NSString *dateTimeStr);
-// custom
 typedef void (^ClickedCancelButton)(void);
 typedef void (^SelectedDateBlock)(NSString *selectedDateString);
 
@@ -55,10 +55,13 @@ typedef void (^SelectedDateBlock)(NSString *selectedDateString);
 @property (nonatomic,strong) UIColor *topViewColor;
 @property (nonatomic,strong) UIColor *buttonTitleColor;
 @property (nonatomic,strong) UIColor *titleColor;
-@property (nonatomic,weak  ) NSString *title;
+@property (nonatomic,weak) NSString *title;
 @property (nonatomic, retain) NSDate *defaultDate;
+@property (nonatomic) LanguageType language;
 
+#pragma mark - init methods
 -(instancetype)initWithDefaultDatetime:(NSDate*)dateTime;
 -(instancetype)initWithDatePickerMode:(DatePickerMode)datePickerMode defaultDateTime:(NSDate*)dateTime;
+
 -(void) showHcdDateTimePicker;
 @end

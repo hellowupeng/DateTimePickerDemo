@@ -10,6 +10,11 @@
 #import "RCTComponent.h"
 @class RNPickerView, HcdDateTimePickerView;
 
+typedef NS_ENUM(NSInteger, LanguageType) {
+  LanguageTypeChinese = 1,
+  LanguageTypeEnglish = 2,
+};
+
 @interface RNPickerView : UIView
 
 @property (nonatomic, strong) HcdDateTimePickerView *picker;
@@ -20,5 +25,6 @@
 @property (nonatomic, assign) NSInteger datePickerMode;
 @property (nonatomic, copy) NSString *defaultTime;
 @property (nonatomic, copy) NSString *title;
+@property (nonatomic) LanguageType languageType;
 
 @end

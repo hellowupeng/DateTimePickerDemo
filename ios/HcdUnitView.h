@@ -11,19 +11,23 @@
 
 @interface HcdUnitView : UIView
 
+#pragma mark - init method
 - (instancetype)initWithDatePickerMode:(DatePickerMode)datePickerMode;
+
 - (void)updateFrameWithDatePickerMode:(DatePickerMode)datePickerMode;
+- (void)updateTitleLanguage:(LanguageType)languageType;
 
 @end
 
-/**
- 显示年、月、日、时、分、秒
- */
+// 年份、月份、日、时、分、秒视图
 @interface HcdTextView : UIView
 
 @property (nonatomic, strong) UILabel *titleLabel;
 
+#pragma mark - init method
 - (instancetype)initWithTitle:(NSString *)title;
+
 - (void)updateTitleRect;
+- (void)updateTitleWithKey:(NSString *)key Language:(LanguageType)languageType;
 
 @end

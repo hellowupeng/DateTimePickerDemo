@@ -11,6 +11,7 @@
 
 @implementation RNPickerView
 
+#pragma mark - init methods
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -23,7 +24,6 @@
   __weak RNPickerView *weakSelf = self;
   _picker = [[HcdDateTimePickerView alloc] initWithDatePickerMode:DatePickerDateMode defaultDateTime:[[NSDate alloc] initWithTimeIntervalSinceNow:0]];
   _picker.topViewColor = [UIColor greenColor];
-//  _picker.title = @"";
   _picker.titleColor = [UIColor grayColor];
   // click OK button callback
   _picker.clickedOkBtn = ^(NSString * datetimeStr) {
@@ -31,13 +31,13 @@
     NSDictionary *params = @{@"data": datetimeStr};
     innerself.onPickerConfirm(params);
   };
-  // click cancel button callback
+  // Click cancel button callback
   _picker.clickedCancelButton = ^{
     RNPickerView *innerSelf = weakSelf;
     NSDictionary *params = @{@"data": @"0"};
     innerSelf.onPickerCancel(params);
   };
-  // selected date change callback
+  // Selected date change callback
   _picker.selectedDateBlock = ^(NSString *selectedDate) {
     NSLog(@"selectedDate ---- %@", selectedDate);
     RNPickerView *innerSelf = weakSelf;
@@ -47,6 +47,46 @@
   [_picker showHcdDateTimePicker];
 }
 
+#pragma mark - private methods
+- (NSDate *)dateFromString:(NSString *)string {
+  NSDateFormatter *dateFormatter = [NSDateFormatter new];
+  dateFormatter.dateFormat = [self dateFormatterString];
+  NSDate *date = [dateFormatter dateFromString:string];
+  return date;
+}
+
+- (NSString *)dateFormatterString {
+  NSString *dateFormatterString = [NSString new];
+  switch (self.datePickerMode) {
+    case DatePickerDateMode:
+      dateFormatterString = @"yyyy-MM-dd";
+      break;
+    case DatePickerTimeMode:
+      dateFormatterString = @"HH:mm:ss";
+      break;
+    case DatePickerDateTimeMode:
+      dateFormatterString = @"yyyy-MM-dd HH:mm:ss";
+      break;
+    case DatePickerYearMonthMode:
+      dateFormatterString = @"yyyy-MM";
+      break;
+    case DatePickerMonthDayMode:
+      dateFormatterString = @"MM-dd";
+      break;
+    case DatePickerHourMinuteMode:
+      dateFormatterString = @"HH:mm";
+      break;
+    case DatePickerDateHourMinuteMode:
+      dateFormatterString = @"yyyy-MM-dd HH:mm:ss";
+      break;
+    default:
+      dateFormatterString = @"yyyy-MM-dd";
+      break;
+  }
+  return dateFormatterString;
+}
+
+#pragma mark - getters and setters
 - (void)setMinYear:(NSInteger)minYear {
   _picker.minYear = minYear;
 }
@@ -96,21 +136,23 @@
 - (NSInteger)datePickerMode {
   return _picker.datePickerMode;
 }
-// 选中时间
+
 - (void)setDefaultTime:(NSString *)defaultTime {
   NSDate *date = [self dateFromString:defaultTime];
   _picker.defaultDate = date;
-}
-
-- (NSDate *)dateFromString:(NSString *)string {
-  NSDateFormatter *dateFormatter = [NSDateFormatter new];
-  dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-  NSDate *date = [dateFormatter dateFromString:string];
-  return date;
+  _picker.title = defaultTime;
 }
 
 - (void)setTitle:(NSString *)title {
   _picker.title = title;
+}
+
+- (void)setLanguageType:(LanguageType)languageType {
+  if (languageType == LanguageTypeEnglish) {
+    _picker.language = LanguageTypeEnglish;
+  } else {
+    _picker.language = LanguageTypeChinese;
+  }
 }
 
 @end

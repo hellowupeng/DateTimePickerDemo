@@ -25,8 +25,10 @@
 		BF80473698D2E47C7886CFF8 /* libPods-DatePickerDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 29DBD48B0AE6B5972102AF4E /* libPods-DatePickerDemo.a */; };
 		E8211CA91E12122E00BC919C /* RNPickerViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E8211CA81E12122E00BC919C /* RNPickerViewManager.m */; };
 		E8211CBB1E12479200BC919C /* RNPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8211CBA1E12479200BC919C /* RNPickerView.m */; };
-		E8351D4E1E24AA5100212019 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E8351D501E24AA5100212019 /* Localizable.strings */; };
 		E8351D561E24D00C00212019 /* HcdUnitView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8351D551E24D00C00212019 /* HcdUnitView.m */; };
+		E8A68ACD1E2F3A020041E589 /* English.strings in Resources */ = {isa = PBXBuildFile; fileRef = E8A68ACC1E2F3A020041E589 /* English.strings */; };
+		E8A68AE51E2F3ADC0041E589 /* Chinese.strings in Resources */ = {isa = PBXBuildFile; fileRef = E8A68AE41E2F3ADC0041E589 /* Chinese.strings */; };
+		E8A68AEC1E2F513C0041E589 /* NSString+LocalizedString.m in Sources */ = {isa = PBXBuildFile; fileRef = E8A68AEB1E2F513C0041E589 /* NSString+LocalizedString.m */; };
 		E8B365421E13D040008ACAB1 /* HcdDateTimePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B3653D1E13D040008ACAB1 /* HcdDateTimePickerView.m */; };
 		E8B365431E13D040008ACAB1 /* MXSCycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B3653F1E13D040008ACAB1 /* MXSCycleScrollView.m */; };
 		E8B365441E13D040008ACAB1 /* UIColor+HcdCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B365411E13D040008ACAB1 /* UIColor+HcdCustom.m */; };
@@ -200,10 +202,12 @@
 		E8211CB91E12479200BC919C /* RNPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNPickerView.h; sourceTree = "<group>"; };
 		E8211CBA1E12479200BC919C /* RNPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNPickerView.m; sourceTree = "<group>"; };
 		E8351D4D1E24A9F700212019 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
-		E8351D4F1E24AA5100212019 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		E8351D521E24AB6F00212019 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		E8351D541E24D00C00212019 /* HcdUnitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HcdUnitView.h; sourceTree = "<group>"; };
 		E8351D551E24D00C00212019 /* HcdUnitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HcdUnitView.m; sourceTree = "<group>"; };
+		E8A68ACC1E2F3A020041E589 /* English.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = English.strings; sourceTree = "<group>"; };
+		E8A68AE41E2F3ADC0041E589 /* Chinese.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Chinese.strings; sourceTree = "<group>"; };
+		E8A68AEA1E2F513C0041E589 /* NSString+LocalizedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+LocalizedString.h"; sourceTree = "<group>"; };
+		E8A68AEB1E2F513C0041E589 /* NSString+LocalizedString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+LocalizedString.m"; sourceTree = "<group>"; };
 		E8B3653C1E13D040008ACAB1 /* HcdDateTimePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HcdDateTimePickerView.h; sourceTree = "<group>"; };
 		E8B3653D1E13D040008ACAB1 /* HcdDateTimePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HcdDateTimePickerView.m; sourceTree = "<group>"; };
 		E8B3653E1E13D040008ACAB1 /* MXSCycleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXSCycleScrollView.h; sourceTree = "<group>"; };
@@ -325,7 +329,7 @@
 		13B07FAE1A68108700A75B9A /* DatePickerDemo */ = {
 			isa = PBXGroup;
 			children = (
-				E8351D531E24CF7900212019 /* Custom */,
+				E8A68AE11E2F3A250041E589 /* Internationalization */,
 				E8B3653B1E13D022008ACAB1 /* HcdDateTimePicker */,
 				E850B19A1E10E05B00DE8C62 /* Picker */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -335,7 +339,6 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				E8351D501E24AA5100212019 /* Localizable.strings */,
 			);
 			name = DatePickerDemo;
 			sourceTree = "<group>";
@@ -427,15 +430,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E8351D531E24CF7900212019 /* Custom */ = {
-			isa = PBXGroup;
-			children = (
-				E8351D541E24D00C00212019 /* HcdUnitView.h */,
-				E8351D551E24D00C00212019 /* HcdUnitView.m */,
-			);
-			name = Custom;
-			sourceTree = "<group>";
-		};
 		E850B19A1E10E05B00DE8C62 /* Picker */ = {
 			isa = PBXGroup;
 			children = (
@@ -447,9 +441,22 @@
 			name = Picker;
 			sourceTree = "<group>";
 		};
+		E8A68AE11E2F3A250041E589 /* Internationalization */ = {
+			isa = PBXGroup;
+			children = (
+				E8A68ACC1E2F3A020041E589 /* English.strings */,
+				E8A68AE41E2F3ADC0041E589 /* Chinese.strings */,
+				E8A68AEA1E2F513C0041E589 /* NSString+LocalizedString.h */,
+				E8A68AEB1E2F513C0041E589 /* NSString+LocalizedString.m */,
+			);
+			name = Internationalization;
+			sourceTree = "<group>";
+		};
 		E8B3653B1E13D022008ACAB1 /* HcdDateTimePicker */ = {
 			isa = PBXGroup;
 			children = (
+				E8351D541E24D00C00212019 /* HcdUnitView.h */,
+				E8351D551E24D00C00212019 /* HcdUnitView.m */,
 				E8B3653C1E13D040008ACAB1 /* HcdDateTimePickerView.h */,
 				E8B3653D1E13D040008ACAB1 /* HcdDateTimePickerView.m */,
 				E8B3653E1E13D040008ACAB1 /* MXSCycleScrollView.h */,
@@ -704,8 +711,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8A68AE51E2F3ADC0041E589 /* Chinese.strings in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				E8351D4E1E24AA5100212019 /* Localizable.strings in Resources */,
+				E8A68ACD1E2F3A020041E589 /* English.strings in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -779,6 +787,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8A68AEC1E2F513C0041E589 /* NSString+LocalizedString.m in Sources */,
 				E8211CA91E12122E00BC919C /* RNPickerViewManager.m in Sources */,
 				E8211CBB1E12479200BC919C /* RNPickerView.m in Sources */,
 				E8351D561E24D00C00212019 /* HcdUnitView.m in Sources */,
@@ -801,15 +810,6 @@
 			);
 			name = LaunchScreen.xib;
 			path = DatePickerDemo;
-			sourceTree = "<group>";
-		};
-		E8351D501E24AA5100212019 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E8351D4F1E24AA5100212019 /* en */,
-				E8351D521E24AB6F00212019 /* zh-Hans */,
-			);
-			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

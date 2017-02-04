@@ -9,6 +9,7 @@
 #define kTopViewHeight kScaleFrom_iPhone5_Desgin(44)
 
 #import "HcdUnitView.h"
+#import "NSString+LocalizedString.h"
 
 @interface HcdUnitView ()
 
@@ -23,14 +24,7 @@
 
 @implementation HcdUnitView
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect {
-    // Drawing code
-}
-*/
-
+#pragma mark - init methods
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -43,17 +37,17 @@
   CGRect unitViewRect = CGRectMake(0, kTopViewHeight, kScreen_Width, unitViewHeight);
   self = [[HcdUnitView alloc] initWithFrame:unitViewRect];
   
-  self.yearUnitView = [[HcdTextView alloc] initWithTitle:NSLocalizedString(@"年", nil)];
+  self.yearUnitView = [[HcdTextView alloc] initWithTitle:@"年"];
   [self addSubview:_yearUnitView];
-  self.monthUnitView = [[HcdTextView alloc] initWithTitle:NSLocalizedString(@"月", nil)];
+  self.monthUnitView = [[HcdTextView alloc] initWithTitle:@"月"];
   [self addSubview:_monthUnitView];
-  self.dayUnitView = [[HcdTextView alloc] initWithTitle:NSLocalizedString(@"日", nil)];
+  self.dayUnitView = [[HcdTextView alloc] initWithTitle:@"日"];
   [self addSubview:_dayUnitView];
-  self.hourUnitView = [[HcdTextView alloc] initWithTitle:NSLocalizedString(@"时", nil)];
+  self.hourUnitView = [[HcdTextView alloc] initWithTitle:@"时"];
   [self addSubview:_hourUnitView];
-  self.minuteUnitView = [[HcdTextView alloc] initWithTitle:NSLocalizedString(@"分", nil)];
+  self.minuteUnitView = [[HcdTextView alloc] initWithTitle:@"分"];
   [self addSubview:_minuteUnitView];
-  self.secondUnitView = [[HcdTextView alloc] initWithTitle:NSLocalizedString(@"秒", nil)];
+  self.secondUnitView = [[HcdTextView alloc] initWithTitle:@"秒"];
   [self addSubview:_secondUnitView];
   [self updateFrameWithDatePickerMode:datePickerMode];
   return self;
@@ -80,9 +74,17 @@
   }
 }
 
-/**
- DatePickerDateMode = 1
- */
+- (void)updateTitleLanguage:(LanguageType)languageType {
+  [self.yearUnitView updateTitleWithKey:@"年" Language:languageType];
+  [self.monthUnitView updateTitleWithKey:@"月" Language:languageType];
+  [self.dayUnitView updateTitleWithKey:@"日" Language:languageType];
+  [self.hourUnitView updateTitleWithKey:@"时" Language:languageType];
+  [self.minuteUnitView updateTitleWithKey:@"分" Language:languageType];
+  [self.secondUnitView updateTitleWithKey:@"秒" Language:languageType];
+}
+
+#pragma mark - private methods
+// DatePickerDateMode = 1
 - (void)updateTextViewWithDateMode {
   self.yearUnitView.frame = CGRectMake(0, 0, kScreen_Width*0.34, unitViewHeight);
   self.monthUnitView.frame = CGRectMake(kScreen_Width*0.34, 0, kScreen_Width*0.33, unitViewHeight);
@@ -94,9 +96,7 @@
   [self updateTitle];
 }
 
-/**
- DatePickerTimeMode = 2
- */
+// DatePickerTimeMode = 2
 - (void)updateTextViewWithTimeMode {
   self.yearUnitView.frame = CGRectZero;
   self.monthUnitView.frame = CGRectZero;
@@ -107,9 +107,7 @@
   [self updateTitle];
 }
 
-/**
- DatePickerDateTimeMode = 3
- */
+// DatePickerDateTimeMode = 3
 - (void)updateTextViewWithDateTimeMode {
   self.yearUnitView.frame = CGRectMake(0, 0, kScreen_Width*0.25, unitViewHeight);
   self.monthUnitView.frame = CGRectMake(kScreen_Width*0.25, 0, kScreen_Width*0.15, unitViewHeight);
@@ -120,9 +118,7 @@
   [self updateTitle];
 }
 
-/**
- DatePickerYearMonthMode = 4
- */
+// DatePickerYearMonthMode = 4
 - (void)updateTextViewWithYearMonthMode {
   self.yearUnitView.frame = CGRectMake(0, 0, kScreen_Width*0.5, unitViewHeight);
   self.monthUnitView.frame = CGRectMake(kScreen_Width*0.5, 0, kScreen_Width*0.5, unitViewHeight);
@@ -133,9 +129,7 @@
   [self updateTitle];
 }
 
-/**
- DatePickerMonthDayMode = 5
- */
+// DatePickerMonthDayMode = 5
 - (void)updateTextViewWithMonthDayMode {
   self.yearUnitView.frame = CGRectZero;
   self.monthUnitView.frame = CGRectMake(0, 0, kScreen_Width*0.5, unitViewHeight);
@@ -146,9 +140,7 @@
   [self updateTitle];
 }
 
-/**
- DatePickerHourMinuteMode = 6
- */
+// DatePickerHourMinuteMode = 6
 - (void)updateTextViewWithHourMinuteMode {
   self.yearUnitView.frame = CGRectZero;
   self.monthUnitView.frame = CGRectZero;
@@ -159,9 +151,7 @@
   [self updateTitle];
 }
 
-/**
- DatePickerDateHourMinuteMode = 7
- */
+// DatePickerDateHourMinuteMode = 7
 - (void)updateTextViewWithDateHourMinuteMode {
   self.yearUnitView.frame = CGRectMake(0, 0, kScreen_Width*0.28, unitViewHeight);
   self.monthUnitView.frame = CGRectMake(kScreen_Width*0.28, 0, kScreen_Width*0.18, unitViewHeight);
@@ -184,6 +174,7 @@
 
 @implementation HcdTextView
 
+#pragma mark - init methods
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -211,6 +202,10 @@
   CGSize titleSize = [self.titleLabel.text sizeWithAttributes:dic];
   self.titleLabel.frame = CGRectMake((self.bounds.size.width - titleSize.width) / 2.0,
                                      (self.bounds.size.height - titleSize.height) / 2.0, titleSize.width, titleSize.height);
+}
+
+- (void)updateTitleWithKey:(NSString *)key Language:(LanguageType)languageType {
+  self.titleLabel.text = [NSString localizedStringWithKey:key languageType:languageType];
 }
 
 @end

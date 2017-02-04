@@ -26,7 +26,23 @@ export default class Picker extends Component {
      * 设置默认选中日期时间
      */
     defaultTime: React.PropTypes.string,
+    /**
+     * `dateMode`: 1 eg: yyyy-MM-dd
+     * `timeMode`: 2 eg: HH:mm:ss
+     * `dateTimeMode`: 3 eg: yyyy-MM-dd HH:mm:ss
+     * `yearMonthMode`: 4 eg: yyyy-MM
+     * `monthDayMode`: 5 eg: MM-dd
+     * `hourMinuteMode`: 6 eg: HH:mm
+     * `DateHourMinuteMode`: 7 eg: yyyy-MM-dd HH:mm
+     */
+    datePickerMode: React.PropTypes.number,
+    /**
+     * 1: 简体中文 2: English
+     */
+    languageType: React.PropTypes.number,
   };
+
+  /** life cycle */
   constructor(props) {
     super(props);
     this.state = {
@@ -40,6 +56,7 @@ export default class Picker extends Component {
   componentWillUnmount() {
   }
 
+  /** event response */
   show() {
     this.setState({ showPicker: true });
   }
@@ -51,7 +68,7 @@ export default class Picker extends Component {
   render() {
     const { showPicker } = this.state;
     if (!showPicker) return null;
-    const { minYear, maxYear, datePickerMode, title, onPickerConfirm, onPickerCancel, defaultTime } = this.props;
+    const { minYear, maxYear, datePickerMode, title, onPickerConfirm, onPickerCancel, defaultTime, languageType } = this.props;
     return (
       <RNPickerView
         style={styles.picker}
@@ -62,10 +79,12 @@ export default class Picker extends Component {
         title={title}
         onPickerConfirm={(event) => onPickerConfirm(event.nativeEvent.data)}
         onPickerCancel={(event) => onPickerCancel(event.nativeEvent.data)}
+        languageType={languageType}
       />
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
