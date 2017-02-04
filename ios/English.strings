@@ -8,17 +8,19 @@
 
 // Englise
 
-// button title
+// 按钮标题
 "确定" = "Confirm";
 "取消" = "Cancel";
-// date
+
+// 日期时间单位
 "年" = "year";
 "月" = "month";
 "日" = "day";
 "时" = "hour";
 "分" = "minute";
 "秒" = "second";
-// week
+
+// 星期
 "周日" = "Sun";
 "周一" = "Mon";
 "周二" = "Tue";

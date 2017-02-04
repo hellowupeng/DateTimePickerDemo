@@ -34,4 +34,5 @@
 + (UIColor *)colorWithRGBHex:(UInt32)hex;
 + (UIColor *)colorWithHexString:(NSString *)stringToConvert;
 + (UIColor *)colorWithHexString:(NSString *)stringToConvert andAlpha:(CGFloat)alpha;
+
 @end

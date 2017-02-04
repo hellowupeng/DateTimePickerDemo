@@ -12,6 +12,7 @@
 @implementation RNPickerView
 
 #pragma mark - init methods
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -23,31 +24,33 @@
 - (void)initDatePickerView {
   __weak RNPickerView *weakSelf = self;
   _picker = [[HcdDateTimePickerView alloc] initWithDatePickerMode:DatePickerDateMode defaultDateTime:[[NSDate alloc] initWithTimeIntervalSinceNow:0]];
-  _picker.topViewColor = [UIColor greenColor];
+  _picker.topViewColor = [UIColor whiteColor];
   _picker.titleColor = [UIColor grayColor];
-  // click OK button callback
+	_picker.buttonTitleColor = [UIColor greenColor];
+
   _picker.clickedOkBtn = ^(NSString * datetimeStr) {
     RNPickerView *innerself = weakSelf;
     NSDictionary *params = @{@"data": datetimeStr};
     innerself.onPickerConfirm(params);
   };
-  // Click cancel button callback
+
   _picker.clickedCancelButton = ^{
     RNPickerView *innerSelf = weakSelf;
     NSDictionary *params = @{@"data": @"0"};
     innerSelf.onPickerCancel(params);
   };
-  // Selected date change callback
-  _picker.selectedDateBlock = ^(NSString *selectedDate) {
-    NSLog(@"selectedDate ---- %@", selectedDate);
-    RNPickerView *innerSelf = weakSelf;
-    innerSelf.picker.title = selectedDate;
-  };
+
+//  _picker.selectedDateBlock = ^(NSString *selectedDate) {
+//    NSLog(@"selectedDate ---- %@", selectedDate);
+//    RNPickerView *innerSelf = weakSelf;
+//    innerSelf.picker.title = selectedDate;
+//  };
   [self addSubview:_picker];
   [_picker showHcdDateTimePicker];
 }
 
 #pragma mark - private methods
+
 - (NSDate *)dateFromString:(NSString *)string {
   NSDateFormatter *dateFormatter = [NSDateFormatter new];
   dateFormatter.dateFormat = [self dateFormatterString];
@@ -87,6 +90,7 @@
 }
 
 #pragma mark - getters and setters
+
 - (void)setMinYear:(NSInteger)minYear {
   _picker.minYear = minYear;
 }
@@ -148,10 +152,10 @@
 }
 
 - (void)setLanguageType:(LanguageType)languageType {
-  if (languageType == LanguageTypeEnglish) {
-    _picker.language = LanguageTypeEnglish;
-  } else {
+  if (languageType == LanguageTypeChinese) {
     _picker.language = LanguageTypeChinese;
+  } else {
+    _picker.language = LanguageTypeEnglish;
   }
 }
 

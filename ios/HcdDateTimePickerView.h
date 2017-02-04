@@ -27,15 +27,23 @@
 #import "MXSCycleScrollView.h"
 #import "RNPickerView.h"
 
+/// 年月日时分秒单位视图高度
 extern CGFloat const unitViewHeight;
 
 typedef enum {
+		/// 日期模式
     DatePickerDateMode = 1,
+		/// 时间模式
     DatePickerTimeMode,
+		/// 日期时间模式
     DatePickerDateTimeMode,
+		/// 年月模式
     DatePickerYearMonthMode,
+		/// 月日模式
     DatePickerMonthDayMode,
+		/// 时分模式
     DatePickerHourMinuteMode,
+		/// 日期时分模式
     DatePickerDateHourMinuteMode
 } DatePickerMode;
 
@@ -45,23 +53,49 @@ typedef void (^ClickedCancelButton)(void);
 typedef void (^SelectedDateBlock)(NSString *selectedDateString);
 
 @interface HcdDateTimePickerView : UIView <MXSCycleScrollViewDatasource,MXSCycleScrollViewDelegate>
+
+/// 点击确认按钮回调
 @property (nonatomic,strong) ClickedOkBtn clickedOkBtn;
+
+/// 点击取消按钮回调
 @property (nonatomic, strong) ClickedCancelButton clickedCancelButton;
+
+/// 选中日期改变时回调
 @property (nonatomic, strong) SelectedDateBlock selectedDateBlock;
 
+/// 日期选择器类型
 @property (nonatomic,assign) DatePickerMode datePickerMode;
+
+/// 最大年份
 @property (nonatomic,assign) NSInteger maxYear;
+
+/// 最小年份
 @property (nonatomic,assign) NSInteger minYear;
+
+/// 顶部视图颜色
 @property (nonatomic,strong) UIColor *topViewColor;
+
+/// 按钮文字颜色
 @property (nonatomic,strong) UIColor *buttonTitleColor;
+
+/// 标题颜色
 @property (nonatomic,strong) UIColor *titleColor;
+
+/// 顶部视图中间标题文本
 @property (nonatomic,weak) NSString *title;
+
+/// 默认日期
 @property (nonatomic, retain) NSDate *defaultDate;
+
+/// 当前显示语言
 @property (nonatomic) LanguageType language;
 
 #pragma mark - init methods
+
 -(instancetype)initWithDefaultDatetime:(NSDate*)dateTime;
 -(instancetype)initWithDatePickerMode:(DatePickerMode)datePickerMode defaultDateTime:(NSDate*)dateTime;
 
+/// 显示日期时间选择器
 -(void) showHcdDateTimePicker;
+
 @end

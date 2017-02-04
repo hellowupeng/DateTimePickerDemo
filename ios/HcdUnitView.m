@@ -25,6 +25,7 @@
 @implementation HcdUnitView
 
 #pragma mark - init methods
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
@@ -84,7 +85,8 @@
 }
 
 #pragma mark - private methods
-// DatePickerDateMode = 1
+
+/// DatePickerDateMode = 1
 - (void)updateTextViewWithDateMode {
   self.yearUnitView.frame = CGRectMake(0, 0, kScreen_Width*0.34, unitViewHeight);
   self.monthUnitView.frame = CGRectMake(kScreen_Width*0.34, 0, kScreen_Width*0.33, unitViewHeight);
@@ -96,7 +98,7 @@
   [self updateTitle];
 }
 
-// DatePickerTimeMode = 2
+/// DatePickerTimeMode = 2
 - (void)updateTextViewWithTimeMode {
   self.yearUnitView.frame = CGRectZero;
   self.monthUnitView.frame = CGRectZero;
@@ -107,7 +109,7 @@
   [self updateTitle];
 }
 
-// DatePickerDateTimeMode = 3
+/// DatePickerDateTimeMode = 3
 - (void)updateTextViewWithDateTimeMode {
   self.yearUnitView.frame = CGRectMake(0, 0, kScreen_Width*0.25, unitViewHeight);
   self.monthUnitView.frame = CGRectMake(kScreen_Width*0.25, 0, kScreen_Width*0.15, unitViewHeight);
@@ -118,7 +120,7 @@
   [self updateTitle];
 }
 
-// DatePickerYearMonthMode = 4
+/// DatePickerYearMonthMode = 4
 - (void)updateTextViewWithYearMonthMode {
   self.yearUnitView.frame = CGRectMake(0, 0, kScreen_Width*0.5, unitViewHeight);
   self.monthUnitView.frame = CGRectMake(kScreen_Width*0.5, 0, kScreen_Width*0.5, unitViewHeight);
@@ -129,7 +131,7 @@
   [self updateTitle];
 }
 
-// DatePickerMonthDayMode = 5
+/// DatePickerMonthDayMode = 5
 - (void)updateTextViewWithMonthDayMode {
   self.yearUnitView.frame = CGRectZero;
   self.monthUnitView.frame = CGRectMake(0, 0, kScreen_Width*0.5, unitViewHeight);
@@ -140,7 +142,7 @@
   [self updateTitle];
 }
 
-// DatePickerHourMinuteMode = 6
+/// DatePickerHourMinuteMode = 6
 - (void)updateTextViewWithHourMinuteMode {
   self.yearUnitView.frame = CGRectZero;
   self.monthUnitView.frame = CGRectZero;
@@ -151,7 +153,7 @@
   [self updateTitle];
 }
 
-// DatePickerDateHourMinuteMode = 7
+/// DatePickerDateHourMinuteMode = 7
 - (void)updateTextViewWithDateHourMinuteMode {
   self.yearUnitView.frame = CGRectMake(0, 0, kScreen_Width*0.28, unitViewHeight);
   self.monthUnitView.frame = CGRectMake(kScreen_Width*0.28, 0, kScreen_Width*0.18, unitViewHeight);
@@ -175,6 +177,7 @@
 @implementation HcdTextView
 
 #pragma mark - init methods
+
 - (instancetype)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {

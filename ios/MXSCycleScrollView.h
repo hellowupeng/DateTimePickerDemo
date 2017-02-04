@@ -39,7 +39,9 @@
 @property (nonatomic,assign,setter = setDataource:) id<MXSCycleScrollViewDatasource> datasource;
 @property (nonatomic,assign,setter = setDelegate:) id<MXSCycleScrollViewDelegate> delegate;
 
-- (void)setCurrentSelectPage:(NSInteger)selectPage; //设置初始化页数
+/// 设置初始化页数
+- (void)setCurrentSelectPage:(NSInteger)selectPage;
+
 - (void)reloadData;
 - (void)setViewContent:(UIView *)view atIndex:(NSInteger)index;
 

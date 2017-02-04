@@ -14,26 +14,55 @@ CGFloat const unitViewHeight = 25;
 
 @interface HcdDateTimePickerView()<UIGestureRecognizerDelegate>
 {
-  UIView                      *timeBroadcastView;//定时播放显示视图
+	/// 定时播放显示视图
+  UIView                      *timeBroadcastView;
+	
   UIView                      *topView;
   UILabel                     *titleLbl;
-  MXSCycleScrollView          *yearScrollView;//年份滚动视图
-  MXSCycleScrollView          *monthScrollView;//月份滚动视图
-  MXSCycleScrollView          *dayScrollView;//日滚动视图
-  MXSCycleScrollView          *hourScrollView;//时滚动视图
-  MXSCycleScrollView          *minuteScrollView;//分滚动视图
-  MXSCycleScrollView          *secondScrollView;//秒滚动视图
-  UIButton                    *okBtn;//自定义picker上的确认按钮
-  UIButton                    *cancleBtn;//
+	
+	/// 年份滚动视图
+  MXSCycleScrollView          *yearScrollView;
+	
+	/// 月份滚动视图
+  MXSCycleScrollView          *monthScrollView;
+	
+	/// 日滚动视图
+  MXSCycleScrollView          *dayScrollView;
+	
+	/// 时滚动视图
+  MXSCycleScrollView          *hourScrollView;
+	
+	/// 分滚动视图
+  MXSCycleScrollView          *minuteScrollView;
+	
+	/// 秒滚动视图
+  MXSCycleScrollView          *secondScrollView;
+	
+	/// 自定义picker上的确认按钮
+  UIButton                    *okBtn;
+	
+  UIButton                    *cancleBtn;
   NSString                    *dateTimeStr;
 }
 
-@property (nonatomic,assign) NSInteger curYear;//当前年
-@property (nonatomic,assign) NSInteger curMonth;//当前月
-@property (nonatomic,assign) NSInteger curDay;//当前日
-@property (nonatomic,assign) NSInteger curHour;//当前小时
-@property (nonatomic,assign) NSInteger curMin;//当前分
-@property (nonatomic,assign) NSInteger curSecond;//当前秒
+/// 当前年
+@property (nonatomic,assign) NSInteger curYear;
+
+/// 当前月
+@property (nonatomic,assign) NSInteger curMonth;
+
+/// 当前日
+@property (nonatomic,assign) NSInteger curDay;
+
+/// 当前小时
+@property (nonatomic,assign) NSInteger curHour;
+
+/// 当前分
+@property (nonatomic,assign) NSInteger curMin;
+
+/// 当前秒
+@property (nonatomic,assign) NSInteger curSecond;
+
 @property (nonatomic, strong) HcdUnitView *unitView;
 
 @end
@@ -41,6 +70,7 @@ CGFloat const unitViewHeight = 25;
 @implementation HcdDateTimePickerView
 
 #pragma mark - init methods
+
 - (instancetype)initWithDefaultDatetime:(NSDate *)dateTime
 {
   self = [super init];
@@ -72,6 +102,7 @@ CGFloat const unitViewHeight = 25;
 }
 
 #pragma mark - mxccyclescrollview databasesource
+
 - (NSInteger)numberOfPages:(MXSCycleScrollView*)scrollView
 {
   if (scrollView == yearScrollView) {
@@ -164,7 +195,8 @@ CGFloat const unitViewHeight = 25;
 }
 
 #pragma mark - mxccyclescrollview delegate
-//滚动时上下标签显示(当前时间和是否为有效时间)
+
+/// 滚动时上下标签显示(当前时间和是否为有效时间)
 - (void)scrollviewDidChangeNumber
 {
   UILabel *yearLabel = [[(UILabel*)[[yearScrollView subviews] objectAtIndex:0] subviews] objectAtIndex:3];
@@ -199,12 +231,17 @@ CGFloat const unitViewHeight = 25;
   [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
   NSString *selectTimeString = [NSString stringWithFormat:@"%ld-%02ld-%02ld %02ld:%02ld:%02ld",(long)self.curYear,(long)self.curMonth,(long)self.curDay,(long)self.curHour,(long)self.curMin,(long)self.curSecond];
   [self selectedDateString];
-  self.selectedDateBlock(dateTimeStr); // 返回当前选中的日期
+	
+	// 返回当前选中的日期
+  self.selectedDateBlock(dateTimeStr);
+
   NSDate *selectDate = [dateFormatter dateFromString:selectTimeString];
   NSDate *nowDate = self.defaultDate;
   NSString *nowString = [dateFormatter stringFromDate:nowDate];
   NSDate *nowStrDate = [dateFormatter dateFromString:nowString];
-  if (NSOrderedAscending == [selectDate compare:nowStrDate]) { // 选择的时间与当前系统时间做比较
+	
+	// 选择的时间与当前系统时间做比较
+  if (NSOrderedAscending == [selectDate compare:nowStrDate]) {
     [okBtn setEnabled:YES];
   }
   else
@@ -214,6 +251,7 @@ CGFloat const unitViewHeight = 25;
 }
 
 #pragma mark - event response
+
 - (void)showHcdDateTimePicker
 {
   typeof(self) __weak weak = self;
@@ -232,8 +270,6 @@ CGFloat const unitViewHeight = 25;
 }
 
 -(void)dismissBlock:(DatePickerCompleteAnimationBlock)block{
-  
-  
   typeof(self) __weak weak = self;
   CGFloat height = kDatePickerHeight;
   
@@ -252,7 +288,6 @@ CGFloat const unitViewHeight = 25;
 }
 
 -(void)dismiss:(UITapGestureRecognizer *)tap{
-  
   if( CGRectContainsPoint(self.frame, [tap locationInView:timeBroadcastView])) {
     NSLog(@"tap");
   } else{
@@ -311,6 +346,7 @@ CGFloat const unitViewHeight = 25;
 }
 
 #pragma mark - private methods
+
 - (void)initDatas {
   _topViewColor = [UIColor colorWithHexString:@"0x6271f3"];
   _buttonTitleColor = [UIColor colorWithHexString:@"0xffffff"];
@@ -379,7 +415,7 @@ CGFloat const unitViewHeight = 25;
   }
 }
 
-// 更新年份显示
+/// 更新年份显示
 - (void)updateCurrentYear {
   self.curYear = [self setNowTimeShow:0];
   [yearScrollView setCurrentSelectPage:(self.curYear-(_minYear+2))];
@@ -391,13 +427,13 @@ CGFloat const unitViewHeight = 25;
   [self setAfterScrollShowView:yearScrollView andCurrentPage:1];
 }
 
-// 更新当前显示月份
+/// 更新当前显示月份
 - (void)updateCurrentMonth {
   self.curMonth = [self setNowTimeShow:1];
   [monthScrollView setCurrentSelectPage:(self.curMonth-3)];
 }
 
-// 更新当前日期
+/// 更新当前日期
 - (void)updateCurrentDay {
   self.curDay = [self setNowTimeShow:2];
   [dayScrollView setCurrentSelectPage:(self.curDay-3)];
@@ -418,14 +454,14 @@ CGFloat const unitViewHeight = 25;
   [secondScrollView setCurrentSelectPage:(self.curSecond-2)];
 }
 
-//通过日期求星期
+/// 通过日期求星期
 - (NSString*)fromDateToWeek:(NSString*)selectDate
 {
   NSInteger yearInt = [selectDate substringWithRange:NSMakeRange(0, 4)].integerValue;
   NSInteger monthInt = [selectDate substringWithRange:NSMakeRange(4, 2)].integerValue;
   NSInteger dayInt = [selectDate substringWithRange:NSMakeRange(6, 2)].integerValue;
-  int c = 20;//世纪
-  NSInteger y = yearInt -1;//年
+  int c = 20; // 世纪
+  NSInteger y = yearInt -1; // 年
   NSInteger d = dayInt;
   NSInteger m = monthInt;
   int w =(y+(y/4)+(c/4)-2*c+(26*(m+1)/10)+d-1)%7;
@@ -496,7 +532,7 @@ CGFloat const unitViewHeight = 25;
   }
 }
 
-////设置现在时间
+/// 设置现在时间
 - (NSInteger)setNowTimeShow:(NSInteger)timeType
 {
   NSDate *now = self.defaultDate;
@@ -552,7 +588,7 @@ CGFloat const unitViewHeight = 25;
   return 0;
 }
 
-//选择设置的播报时间
+/// 选择设置的播报时间
 - (void)selectSetBroadcastTime
 {
   UILabel *yearLabel = [[(UILabel*)[[yearScrollView subviews] objectAtIndex:0] subviews] objectAtIndex:3];
@@ -573,6 +609,7 @@ CGFloat const unitViewHeight = 25;
 }
 
 #pragma mark - getters and setters
+
 - (void)setMaxYear:(NSInteger)maxYear {
   _maxYear = maxYear;
   [self updateYearScrollView];
@@ -621,7 +658,7 @@ CGFloat const unitViewHeight = 25;
   [self updateDateMode];
 }
 
-//设置自定义datepicker界面
+/// 设置自定义datepicker界面
 - (void)setTimeBroadcastView
 {
   [self setFrame:CGRectMake(0, 0, kScreen_Width, kScreen_Height)];
@@ -661,7 +698,7 @@ CGFloat const unitViewHeight = 25;
   
   timeBroadcastView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kScreen_Width, kTimeBroadcastViewHeight + unitViewHeight)];
   timeBroadcastView.backgroundColor = [UIColor redColor];
-  timeBroadcastView.layer.cornerRadius = 0;//设置视图圆角
+  timeBroadcastView.layer.cornerRadius = 0; // 设置视图圆角
   timeBroadcastView.layer.masksToBounds = YES;
   CGColorRef cgColor = [UIColor colorWithRed:221.0/255.0 green:221.0/255.0 blue:221.0/255.0 alpha:1.0].CGColor;
   timeBroadcastView.layer.borderColor = cgColor;
@@ -692,7 +729,7 @@ CGFloat const unitViewHeight = 25;
   [okBtn setTitle:[NSString localizedStringWithKey:@"确定" languageType:self.language] forState:UIControlStateNormal];
 }
 
-//设置年月日时分的滚动视图
+/// 设置年月日时分的滚动视图
 - (void)setYearScrollView
 {
   if (self.datePickerMode == DatePickerDateTimeMode) {
@@ -711,7 +748,7 @@ CGFloat const unitViewHeight = 25;
   [timeBroadcastView addSubview:yearScrollView];
 }
 
-//设置年月日时分的滚动视图
+/// 设置年月日时分的滚动视图
 - (void)setMonthScrollView
 {
   if (self.datePickerMode == DatePickerDateTimeMode) {
@@ -732,7 +769,7 @@ CGFloat const unitViewHeight = 25;
   [timeBroadcastView addSubview:monthScrollView];
 }
 
-//设置年月日时分的滚动视图
+/// 设置年月日时分的滚动视图
 - (void)setDayScrollView
 {
   if (self.datePickerMode == DatePickerDateTimeMode) {
@@ -751,7 +788,7 @@ CGFloat const unitViewHeight = 25;
   [timeBroadcastView addSubview:dayScrollView];
 }
 
-//设置年月日时分的滚动视图
+/// 设置年月日时分的滚动视图
 - (void)setHourScrollView
 {
   if (self.datePickerMode == DatePickerDateTimeMode) {
@@ -770,7 +807,7 @@ CGFloat const unitViewHeight = 25;
   [timeBroadcastView addSubview:hourScrollView];
 }
 
-//设置年月日时分的滚动视图
+/// 设置年月日时分的滚动视图
 - (void)setMinuteScrollView
 {
   if (self.datePickerMode == DatePickerDateTimeMode) {
@@ -789,7 +826,7 @@ CGFloat const unitViewHeight = 25;
   [timeBroadcastView addSubview:minuteScrollView];
 }
 
-//设置年月日时分的滚动视图
+/// 设置年月日时分的滚动视图
 - (void)setSecondScrollView
 {
   if (self.datePickerMode == DatePickerDateTimeMode) {

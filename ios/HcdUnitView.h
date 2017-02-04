@@ -12,6 +12,7 @@
 @interface HcdUnitView : UIView
 
 #pragma mark - init method
+
 - (instancetype)initWithDatePickerMode:(DatePickerMode)datePickerMode;
 
 - (void)updateFrameWithDatePickerMode:(DatePickerMode)datePickerMode;
@@ -19,12 +20,14 @@
 
 @end
 
-// 年份、月份、日、时、分、秒视图
+/// 年份、月份、日、时、分、秒视图
 @interface HcdTextView : UIView
 
+/// 日期时间单位文本视图
 @property (nonatomic, strong) UILabel *titleLabel;
 
 #pragma mark - init method
+
 - (instancetype)initWithTitle:(NSString *)title;
 
 - (void)updateTitleRect;

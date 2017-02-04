@@ -9,8 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "RCTViewManager.h"
 #import "RCTBridgeModule.h"
-@class HcdDateTimePickerView;
 #import "RNPickerView.h"
+
+@class HcdDateTimePickerView;
 
 @interface RNPickerViewManager : RCTViewManager<RCTBridgeModule>
 
